@@ -2,10 +2,21 @@
 {
     public enum Genre
     {
-        Action,
-        Rom_com,
-        Thriller,
-        Horror,
-
+    Action,
+    Adventure,
+    Animation,
+    Comedy,
+    Crime,
+    Drama,
+    Fantasy,
+    Horror,
+    Mystery,
+    SciFi,
+    Romance,
+    Thriller,
+    Western,
+    War,
+    Documentary,
+    Musical
     }
 }
