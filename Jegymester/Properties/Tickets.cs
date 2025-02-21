@@ -6,5 +6,8 @@
         public DateTime date { get; set; }
         public int Price { get; set; }
 
+        //Egy ticket egy vásárlás
+        public List<PurchasedTickets> purchasedTickets { get; set; } = new List<PurchasedTickets>();
+
     }
 }
