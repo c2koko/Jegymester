@@ -4,7 +4,7 @@ namespace Jegymester.Properties
     public class Rooms
     {
         // szobában levő székek kezelése
-        public List<bool> Chairs = new List<bool>(100); // 10x10 terem
+        public List<bool> Chairs = new List<bool>(100); // 0-99 10x10 terem
         public void InitializingChairs()
         {
             for (int i = 0; i < 100; i++)
@@ -15,30 +15,30 @@ namespace Jegymester.Properties
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void BookChair(int chairToBeBooked) // a kapott érték eggyel igazított
         {
-            if(Chairs.Any(c => c == false))
+            if(!Chairs.Any(c => c == false))
             {
                 Console.WriteLine("a teremben nincsen ütes hely");
             }
             // szabad e a kiválasztott szék
-            if (!Chairs[chairToBeBooked])
+            if (Chairs[chairToBeBooked] == false)
             {
                 Chairs[chairToBeBooked] = true;
                 Console.WriteLine("sikeres jegyfoglalás"); 
             }
-            Console.WriteLine("hiba"); 
+            Console.WriteLine("hiba, a szék nem elérhető(jegyfoglalás a Room.cs-ben)"); 
         }
         public string GetEmptyChairs()
         {
-            string emptyChairsString = "Szabad székek: ";
+            string emptyChairsString = "Szabad székek: \n";
             for (int i = 0; i < 99; i++)
             {
                 if (!Chairs[i])
                 {
-                    int dim1 = 0; //kisebb szám
-                    double dim2 = 0; // 10re osztva
-                    dim1 = (i % 10) + 1;
-                    dim2 = Math.Floor((double)i / 10);
-                    emptyChairsString += $"{dim2} sor, {dim1} oszlop";
+                    int dim1 = 0;
+                    double dim2 = 0;
+                    dim1 = (i % 10)+1;
+                    dim2 = Math.Floor((double)i / 10)+1;
+                    emptyChairsString += $"{dim2} sor, {dim1} oszlop \n";
                 }
             }
             return emptyChairsString;
