@@ -7,7 +7,9 @@
         public int Price { get; set; }
 
         //Egy ticket, egy vásárlás
-        public PurchasedTickets purchasedTickets { get; set; } 
+        public Users User { get; set; }
+        //Egy ticket, Egy screening
+        public Screening Screening { get; set; }
 
     }
 }

@@ -3,9 +3,13 @@ namespace Jegymester.Properties
 {
     public class Rooms
     {
+        public int RoomId {  get; set; }
+        public List<RoomsChairs> RoomsChairs { get; set; }
+
         // szobában levő székek kezelése
-        public List<bool> Chairs = new List<bool>(100); // 10x10 terem
-        public void InitializingChairs()
+        //public List<bool> Chairs = new List<bool>(100); // 10x10 terem
+
+        /*public void InitializingChairs()
         {
             for (int i = 0; i < 100; i++)
             {
@@ -41,7 +45,7 @@ namespace Jegymester.Properties
                     emptyChairsString += $"{dim2} sor, {dim1} oszlop";
                 }
             }
-            return emptyChairsString;
-        }
+            return emptyChairsString;*/
+    }
     }
 }
