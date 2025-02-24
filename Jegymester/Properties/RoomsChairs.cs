@@ -1,6 +1,4 @@
-﻿using Jegymester.Properties;
-
-namespace Jegymester
+﻿namespace Jegymester.Properties
 {
     public class RoomsChairs
     {
@@ -10,6 +8,6 @@ namespace Jegymester
         public int ChairId { get; set; }
         public Chair Chair { get; set; }
 
-        public bool Reserved {  get; set; }
+        public bool Reserved { get; set; }
     }
 }
