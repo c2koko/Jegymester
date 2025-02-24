@@ -45,7 +45,7 @@ namespace Jegymester.Properties
                     emptyChairsString += $"{dim2} sor, {dim1} oszlop";
                 }
             }
-            return emptyChairsString;*/
-    }
+            return emptyChairsString;
+    }*/
     }
 }
