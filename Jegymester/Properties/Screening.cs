@@ -12,8 +12,8 @@
         // Egy screeninghez több jegy
         public List<Tickets> Tickets { get; set; }
 
-        //Egy vetítés Több terem
-        public List<Rooms> Rooms { get; set; } 
+        //Egy vetítés Egy teremben (Letároljuk az időt, így az adott időben lévő vetítés egyedi. Lehet, hogy lesz egy ugyanolyan film, de az másik időben)
+       public Rooms Room {  get; set; }
         
     }
 }
