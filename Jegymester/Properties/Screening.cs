@@ -12,6 +12,8 @@
         // Egy screeninghez több jegy
         public List<Tickets> Tickets { get; set; }
 
+        //Egy vetítés Több terem
+        public List<Rooms> Rooms { get; set; } 
         
     }
 }

@@ -4,6 +4,8 @@ namespace Jegymester.Properties
     public class Rooms
     {
         public int RoomId {  get; set; }
+        //Egy room-ban, több vetítés
+        public List<Screening> Screenings { get; set; }
         public List<RoomsChairs> RoomsChairs { get; set; }
 
         // szobában levő székek kezelése
