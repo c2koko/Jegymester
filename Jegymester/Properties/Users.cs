@@ -10,9 +10,10 @@
         
         // Egy ember egy role
         public Roles Role {  get; set; }
+
+        //Egy user több ticket
         
-        //Egy vásárlónak több vásárlása
-        public List<PurchasedTickets> purchasedTickets { get; set; } = new List<PurchasedTickets>();
+        public List<Tickets> Tickets { get; set; }
 
     }
 }

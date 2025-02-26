@@ -6,8 +6,10 @@
         public DateTime date { get; set; }
         public int Price { get; set; }
 
-        //Egy ticket....?
-        public List<PurchasedTickets> purchasedTickets { get; set; } = new List<PurchasedTickets>();
+        //Egy ticket, egy vásárlás
+        public Users User { get; set; }
+        //Egy ticket, Egy screening
+        public Screening Screening { get; set; }
 
     }
 }
