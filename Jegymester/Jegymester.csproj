@@ -16,4 +16,10 @@
     <PackageReference Include="Scalar.AspNetCore" Version="2.0.18" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Controllers\Controllers.csproj" />
+    <ProjectReference Include="..\Entities\Entities.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
+  </ItemGroup>
+
 </Project>
