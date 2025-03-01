@@ -1,4 +1,6 @@
-using Jegymester.Properties;
+using Jegymester.Data;
+using Jegymester.Entities;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.Red;Console.WriteLine("       __                 __  ___    _____ __       ____ \n" +                          "      / ___  ____ ___  __/  |/  ___ / ___// /____  / __ \\\n" +                          " __  / / _ \\/ __ `/ / / / /|_/ / _ \\\\__ \\/ __/ _ \\/ /_/ /\n" +                          "/ /_/ /  __/ /_/ / /_/ / /  / /  _____/ / /_/  __/ _, _/ \n" +                          "\\____/\\___/\\__, /\\__, /_/  /_/\\___/____/\\__/\\___/_/ |_|  \n" +                          "          /____//____/                                   \n" +                          "           ___        ____                               \n" +                          " _   __   <  /       / __ \\                              \n" +                          "| | / /   / /       / / / /                              \n" +                          "| |/ /   / /  _    / /_/ /                               \n" +                          "|___/   /_/  (_)   \\____/                                \n" +                          "                                                         ");Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.White;
@@ -21,6 +23,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+//connecting to the db
+builder.Services.AddDbContext<JegymesterDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 var app = builder.Build();

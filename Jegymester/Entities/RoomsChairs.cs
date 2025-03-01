@@ -1,8 +1,8 @@
-﻿namespace Jegymester.Properties
+﻿namespace Jegymester.Entities
 {
     public class RoomsChairs
     {
-        public int RoomId { get; set; }
+        public int Id { get; set; } //RoomId
         public Rooms Room { get; set; }
 
         public int ChairId { get; set; }

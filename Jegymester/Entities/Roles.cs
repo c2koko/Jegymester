@@ -1,8 +1,8 @@
-﻿namespace Jegymester.Properties
+﻿namespace Jegymester.Entities
 {
     public class Roles
     {
-        public int RoleId { get; set; }
+        public int Id { get; set; } //RoleId
         public string RoleName { get; set; }
 
         //Egy Role több User

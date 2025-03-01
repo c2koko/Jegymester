@@ -1,8 +1,8 @@
-﻿namespace Jegymester.Properties
+﻿namespace Jegymester.Entities
 {
-    public class Tickets
+    public class Ticket
     {
-        public int TicketId { get; set; }
+        public int Id { get; set; } //TicketId
         public DateTime date { get; set; }
         public int Price { get; set; }
 

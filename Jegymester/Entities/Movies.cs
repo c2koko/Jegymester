@@ -1,9 +1,9 @@
-﻿namespace Jegymester.Properties
+﻿namespace Jegymester.Entities
 {
     
     public class Movies
     {
-        public int MovieId {  get; set; }
+        public int Id {  get; set; } //MovieId
         public string MovieName {  get; set; }
         public string MovieDescription { get; set; }
 

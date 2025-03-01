@@ -1,8 +1,8 @@
-﻿namespace Jegymester.Properties
+﻿namespace Jegymester.Entities
 {
     public class Users
     {
-        public int UserID {  get; set; }
+        public int Id {  get; set; } //UserId
         public string Name {  get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
@@ -13,7 +13,7 @@
 
         //Egy user több ticket
         
-        public List<Tickets> Tickets { get; set; }
+        public List<Ticket> Tickets { get; set; }
 
     }
 }

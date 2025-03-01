@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
-namespace Jegymester.Properties
+namespace Jegymester.Entities
 {
     public class Rooms
     {
-        public int RoomId {  get; set; }
+        public int Id {  get; set; } //RoomId
         //Egy room-ban, több vetítés
         public List<Screening> Screenings { get; set; }
         public List<RoomsChairs> RoomsChairs { get; set; }

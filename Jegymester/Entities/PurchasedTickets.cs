@@ -1,4 +1,4 @@
-﻿namespace Jegymester.Properties
+﻿namespace Jegymester.Entities
 {
     public class PurchasedTickets
     {
