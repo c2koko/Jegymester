@@ -38,7 +38,7 @@ namespace Jegymester.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chair");
+                    b.ToTable("Chair", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.Entities.Movies", b =>
@@ -59,7 +59,7 @@ namespace Jegymester.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.Entities.Roles", b =>
@@ -76,7 +76,7 @@ namespace Jegymester.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.Entities.Rooms", b =>
@@ -89,7 +89,7 @@ namespace Jegymester.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.Entities.RoomsChairs", b =>
@@ -115,7 +115,7 @@ namespace Jegymester.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomsChairs");
+                    b.ToTable("RoomsChairs", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.Entities.Screening", b =>
@@ -144,7 +144,7 @@ namespace Jegymester.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Screening");
+                    b.ToTable("Screening", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.Entities.Ticket", b =>
@@ -173,7 +173,7 @@ namespace Jegymester.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.Entities.Users", b =>
@@ -207,7 +207,7 @@ namespace Jegymester.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.Entities.RoomsChairs", b =>
