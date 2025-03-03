@@ -7,13 +7,17 @@
         public DateTime ScreeningstartTime { get; set; }
         
         //Egy screeninghez egy Movie
-        public Movies Movie { get; set; }
+        // A MovieId Foreign Key
+        public int MovieId { get; set; }
+        public Movie Movie { get; set; }
 
         // Egy screeninghez több jegy
         public List<Ticket> Tickets { get; set; }
 
         //Egy vetítés Egy teremben (Letároljuk az időt, így az adott időben lévő vetítés egyedi. Lehet, hogy lesz egy ugyanolyan film, de az másik időben)
-       public Rooms Room {  get; set; }
+        // A RoomId Foreign Key
+        public int RoomId { get; set; }
+        public Room Room {  get; set; }
         
     }
 }

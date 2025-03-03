@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Utilities;
 using Entities;
+using Jegymester.Controllers;
 
 UtilitiesClass.PrintBanner();
 

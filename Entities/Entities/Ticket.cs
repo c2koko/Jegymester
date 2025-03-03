@@ -7,8 +7,13 @@
         public int Price { get; set; }
 
         //Egy ticket, egy vásárlás
-        public Users User { get; set; }
+
+        // A UserId szükséges, mint idegen kulcs
+        public int UserId { get; set; }
+        public User User { get; set; }
         //Egy ticket, Egy screening
+        // A ScreeningId kell, mivel idegen kulcs
+        public int ScreeningId { get; set; }
         public Screening Screening { get; set; }
 
     }

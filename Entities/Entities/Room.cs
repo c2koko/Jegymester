@@ -1,12 +1,12 @@
 ﻿using System.Runtime.CompilerServices;
 namespace Jegymester.Entities
 {
-    public class Rooms
+    public class Room
     {
         public int Id {  get; set; } //RoomId
         //Egy room-ban, több vetítés
         public List<Screening> Screenings { get; set; }
-        public List<RoomsChairs> RoomsChairs { get; set; }
+        public List<RoomChair> RoomsChairs { get; set; }
 
         // szobában levő székek kezelése
         //public List<bool> Chairs = new List<bool>(100); // 10x10 terem

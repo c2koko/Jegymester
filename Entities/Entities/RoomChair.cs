@@ -1,13 +1,12 @@
 ﻿namespace Jegymester.Entities
 {
-    public class RoomsChairs
+    public class RoomChair
     {
         public int Id { get; set; } //RoomId
-        public Rooms Room { get; set; }
-
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
         public int ChairId { get; set; }
         public Chair Chair { get; set; }
-
         public bool Reserved { get; set; }
     }
 }

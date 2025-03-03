@@ -21,7 +21,7 @@ namespace Jegymester
 
 
         [HttpGet("M.Id={Id}")]
-        public ActionResult<Movies> GetMovie(int Id)
+        public ActionResult<Movie> GetMovie(int Id)
         {
             /*
             if ()

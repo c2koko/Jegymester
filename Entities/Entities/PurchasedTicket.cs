@@ -1,6 +1,6 @@
 ﻿namespace Jegymester.Entities
 {
-    public class PurchasedTickets
+    public class PurchasedTicket
     {
         /*public int TicketID { get; set; }
         public int UserID { get; set; }
