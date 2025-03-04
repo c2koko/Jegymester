@@ -1,4 +1,6 @@
-﻿namespace Utilities
+﻿using System.Diagnostics;
+
+namespace Utilities
 {
     public enum Genre
     {
@@ -37,9 +39,11 @@
                                                                                                                         "| | / /   / /       / / / /                              \n" +
                                                                                                                         "| |/ /   / /  _    / /_/ /                               \n" +
                                                                                                                         "|___/   /_/  (_)   \\____/                                \n" +
-                                                                                                                        "                                                         ");
-            Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.White;
+                                                                                                                        "                                                         ");                                                                                                      Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.Yellow; Console.WriteLine("ENTER - A szerver fut \n  0   - A szerver fut + scalar megnyílik böngészőben"); for (ConsoleKeyInfo key; (key = Console.ReadKey(true)).Key != ConsoleKey.Enter;) if (key.Key == ConsoleKey.D0) { Process.Start(new ProcessStartInfo { FileName = "https://localhost:7137/scalar/v1", UseShellExecute = true }); break; } Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.White;
+            // innen lehet folytatni a kódot...
+
         }
+
     }
     
 }

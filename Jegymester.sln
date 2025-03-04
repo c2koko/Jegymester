@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jegymester", "Jegymester\Je
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{7248ADDC-D60F-4A54-8B1F-810E12E42452}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Controllers\Controllers.csproj", "{29FD8293-47F1-4BB3-9BF1-42CFB73D1355}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{F23F2D22-691F-4419-A0DE-F563810AD857}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{7248ADDC-D60F-4A54-8B1F-810E12E42452}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7248ADDC-D60F-4A54-8B1F-810E12E42452}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7248ADDC-D60F-4A54-8B1F-810E12E42452}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29FD8293-47F1-4BB3-9BF1-42CFB73D1355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29FD8293-47F1-4BB3-9BF1-42CFB73D1355}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29FD8293-47F1-4BB3-9BF1-42CFB73D1355}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29FD8293-47F1-4BB3-9BF1-42CFB73D1355}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F23F2D22-691F-4419-A0DE-F563810AD857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F23F2D22-691F-4419-A0DE-F563810AD857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F23F2D22-691F-4419-A0DE-F563810AD857}.Release|Any CPU.ActiveCfg = Release|Any CPU
