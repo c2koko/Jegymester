@@ -3,7 +3,7 @@ using Jegymester.Entities;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Utilities;
-using Entities;
+using Jegymester.Entities;
 using Jegymester.Controllers;
 
 UtilitiesClass.PrintBanner();

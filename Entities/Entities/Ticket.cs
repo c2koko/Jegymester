@@ -3,7 +3,7 @@
     public class Ticket
     {
         public int Id { get; set; } //TicketId
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
         public int Price { get; set; }
 
         //Egy ticket, egy vásárlás
