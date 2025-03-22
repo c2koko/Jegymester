@@ -5,21 +5,32 @@ using Scalar.AspNetCore;
 using Utilities;
 using Jegymester.Entities;
 using Jegymester.Controllers;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 UtilitiesClass.PrintBanner();
 
-/*                              /// TESZT \\\
-Rooms room = new Rooms();
-List<bool> SzékekBooood = new List<bool>(){ true, false, true, false, true, true, false, false, true, false, false, true, true, false, true, false, false, true, true, false, true, false, false, true, true, false, false, true, true, false, true, false, true, false, false, true, true, false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, true, false, false, true };
-room.Chairs = SzékekBaszod;
-room.BookChair(35);
-room.BookChair(25);
-room.BookChair(75);
-Console.WriteLine(room.GetEmptyChairs());
-*/
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"], // saját localhost
+        ValidAudience = builder.Configuration["Jwt:Audience"], // saját localhost
+        //IssuerSigningKey = new AsymmetricSecurityKey(Encoding.UTF8.GetBytes("saját jelszó")) // saját jelszó
+    };
+});
 
 // Add services to the container.
 
@@ -44,7 +55,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors(options =>
+{
+    options.AllowAnyMethod();
+    options.AllowAnyOrigin();
+    options.AllowAnyHeader();
+});
 
 app.MapControllers();
 
