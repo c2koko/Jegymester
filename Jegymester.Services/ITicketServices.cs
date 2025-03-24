@@ -1,6 +1,6 @@
 ﻿namespace Services
 {
-    public class TicketServices
+    public class ITicketServices
     {
 
     }

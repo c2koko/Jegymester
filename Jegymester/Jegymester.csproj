@@ -20,13 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entities\Entities.csproj" />
+    <ProjectReference Include="..\Entities\Jegymester.DataContext.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

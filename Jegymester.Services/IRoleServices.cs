@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    class RoleServices
+    class IRoleServices
     {
     }
 }
