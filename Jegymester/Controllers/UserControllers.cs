@@ -12,17 +12,17 @@ namespace Jegymester.Controllers
     {
         //private readonly IUserService _userService;
 
+        /*
 
+       [HttpPost("register")]
+       [AllowAnonymous]
 
-        [HttpPost("register")]
-        [AllowAnonymous]
-
-        [HttpPost("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] UserLoginDto userDto)
-        {
-            var token = await
-        }
+       [HttpPost("login")]
+       [AllowAnonymous]
+       public async Task<IActionResult> Login([FromBody] UserLoginDto userDto)
+       {
+           var token = await
+       }*/
 
 
     }

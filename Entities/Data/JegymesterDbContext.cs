@@ -1,8 +1,8 @@
-﻿using Jegymester.Entities;
+﻿using Jegymester.DataContext.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Abstractions;
 
-namespace Jegymester.Data
+namespace Jegymester.DataContext.Data
 {
     public class JegymesterDbContext(DbContextOptions<JegymesterDbContext> options) : DbContext(options)
     {

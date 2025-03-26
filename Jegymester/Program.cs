@@ -1,9 +1,8 @@
-using Jegymester.Data;
-using Jegymester.Entities;
+using Jegymester.DataContext.Data;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Utilities;
-using Jegymester.Entities;
+using Jegymester.DataContext.Entities;
 using Jegymester.Controllers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,8 +11,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
+using Jegymester.Services;
 
-UtilitiesClass.PrintBanner();
+//UtilitiesClass.PrintBanner();
 
 
 
@@ -41,6 +41,11 @@ builder.Services.AddOpenApi();
 //connecting to the db
 builder.Services.AddDbContext<JegymesterDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// AutoMapper Config
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+//Service
+builder.Services.AddScoped<ITicketService, TicketService>();
 
 var app = builder.Build();
 

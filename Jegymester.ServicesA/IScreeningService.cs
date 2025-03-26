@@ -1,6 +1,6 @@
 ﻿using Jegymester.Dtos;
-using Jegymester.Entities;
-using Jegymester.Data;
+using Jegymester.DataContext.Entities;
+using Jegymester.DataContext.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 

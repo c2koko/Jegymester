@@ -1,4 +1,4 @@
-﻿namespace Jegymester.Entities
+﻿namespace Jegymester.DataContext.Entities
 {
     public class Ticket
     {

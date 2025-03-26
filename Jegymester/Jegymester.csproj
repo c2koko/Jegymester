@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Entities\Jegymester.DataContext.csproj" />
+    <ProjectReference Include="..\Jegymester.ServicesA\Jegymester.Services.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 

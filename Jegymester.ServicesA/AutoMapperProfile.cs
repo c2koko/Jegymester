@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Jegymester.Dtos;
-using Jegymester.Entities;
+using Jegymester.DataContext.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jegymester.ServicesA
+namespace Jegymester.Services
 {
-    public class AutoMapperProfile: Profile
+    public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
@@ -19,7 +19,12 @@ namespace Jegymester.ServicesA
             CreateMap<ScreeningUpdateDto, Screening>();
             CreateMap<Movie, MovieDto>().ReverseMap();
 
-            //További Mappings-ek ide le
+
+            //Ticket Mappings
+            CreateMap<Ticket, TicketDto>();     //fogalmam sincs még hogy reverse map vagy sima
+            CreateMap<TicketCreateDto, Ticket>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.ScreeningId, opt => opt.MapFrom(src => src.ScreeningId));
         }
     }
 }

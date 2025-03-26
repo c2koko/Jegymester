@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-namespace Jegymester.Entities
+namespace Jegymester.DataContext.Entities
 {
     public class Room
     {

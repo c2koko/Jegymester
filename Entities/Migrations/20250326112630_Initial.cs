@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Jegymester.Migrations
+namespace Jegymester.DataContext.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -12,7 +12,7 @@ namespace Jegymester.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Chair",
+                name: "Chairs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,7 +22,7 @@ namespace Jegymester.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Chair", x => x.Id);
+                    table.PrimaryKey("PK_Chairs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,7 +32,7 @@ namespace Jegymester.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MovieName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MovieDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    MovieDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,7 +40,7 @@ namespace Jegymester.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Role",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -49,7 +49,7 @@ namespace Jegymester.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Role", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,9 +80,9 @@ namespace Jegymester.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
+                        name: "FK_Users_Role_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Roles",
+                        principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -91,19 +91,18 @@ namespace Jegymester.Migrations
                 name: "RoomsChairs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoomId = table.Column<int>(type: "int", nullable: false),
                     ChairId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Reserved = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomsChairs", x => x.Id);
+                    table.PrimaryKey("PK_RoomsChairs", x => new { x.RoomId, x.ChairId });
                     table.ForeignKey(
-                        name: "FK_RoomsChairs_Chair_ChairId",
+                        name: "FK_RoomsChairs_Chairs_ChairId",
                         column: x => x.ChairId,
-                        principalTable: "Chair",
+                        principalTable: "Chairs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -115,7 +114,7 @@ namespace Jegymester.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Screening",
+                name: "Screenings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -127,15 +126,15 @@ namespace Jegymester.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Screening", x => x.Id);
+                    table.PrimaryKey("PK_Screenings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Screening_Movies_MovieId",
+                        name: "FK_Screenings_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Screening_Rooms_RoomId",
+                        name: "FK_Screenings_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id",
@@ -148,7 +147,7 @@ namespace Jegymester.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ScreeningId = table.Column<int>(type: "int", nullable: false)
@@ -157,9 +156,9 @@ namespace Jegymester.Migrations
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Screening_ScreeningId",
+                        name: "FK_Tickets_Screenings_ScreeningId",
                         column: x => x.ScreeningId,
-                        principalTable: "Screening",
+                        principalTable: "Screenings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -171,24 +170,43 @@ namespace Jegymester.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Chairs_Id",
+                table: "Chairs",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rooms_Id",
+                table: "Rooms",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RoomsChairs_ChairId",
                 table: "RoomsChairs",
                 column: "ChairId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoomsChairs_RoomId",
-                table: "RoomsChairs",
-                column: "RoomId");
+                name: "IX_Screenings_Id",
+                table: "Screenings",
+                column: "Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Screening_MovieId",
-                table: "Screening",
+                name: "IX_Screenings_MovieId",
+                table: "Screenings",
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Screening_RoomId",
-                table: "Screening",
+                name: "IX_Screenings_RoomId",
+                table: "Screenings",
                 column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_Id",
+                table: "Tickets",
+                column: "Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_ScreeningId",
@@ -199,6 +217,12 @@ namespace Jegymester.Migrations
                 name: "IX_Tickets_UserId",
                 table: "Tickets",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Id",
+                table: "Users",
+                column: "Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
@@ -216,10 +240,10 @@ namespace Jegymester.Migrations
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Chair");
+                name: "Chairs");
 
             migrationBuilder.DropTable(
-                name: "Screening");
+                name: "Screenings");
 
             migrationBuilder.DropTable(
                 name: "Users");
@@ -231,7 +255,7 @@ namespace Jegymester.Migrations
                 name: "Rooms");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Role");
         }
     }
 }

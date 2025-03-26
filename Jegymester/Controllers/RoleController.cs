@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Jegymester.Entities;
-using Jegymester.Data;
+using Jegymester.DataContext.Entities;
+using Jegymester.DataContext.Data;
 
 namespace Jegymester.Controllers
 {

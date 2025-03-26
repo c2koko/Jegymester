@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Jegymester.Entities;
+using Jegymester.DataContext.Entities;
 using Microsoft.EntityFrameworkCore;
-using Jegymester.Data;
+using Jegymester.DataContext.Data;
 
 
 namespace Jegymester
