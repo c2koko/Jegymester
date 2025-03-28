@@ -10,9 +10,7 @@ namespace Jegymester.DataContext.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Screening> Screenings { get; set; }
         public DbSet<Movie> Movies { get; set; }
-        public DbSet<Room> Rooms { get; set; }
         public DbSet<Chair> Chairs { get; set; }
-        public DbSet<RoomChair> RoomsChairs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,16 +72,17 @@ namespace Jegymester.DataContext.Data
                 .HasForeignKey(scr => scr.MovieId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Screening |N <=> 1| Room
+            // Screening |N <=> 1| Room                // változtatva
 
             modelBuilder.Entity<Screening>()
-                .HasOne(scr => scr.Room)
-                .WithMany(room => room.Screenings)
+                .HasOne(scr => scr.Room)                
+                .WithMany(room => room.screening) 
                 .HasForeignKey(scr => scr.RoomId)
                 .OnDelete(DeleteBehavior.Cascade);
 
         //--- Room tábla relációi ---
-
+        
+        /*
             modelBuilder.Entity<Room>()
                 .HasIndex(room => room.Id)
                 .IsUnique();
@@ -110,12 +109,15 @@ namespace Jegymester.DataContext.Data
                 .WithMany(chair => chair.RoomsChairs)
                 .HasForeignKey(rc => rc.ChairId)
                 .OnDelete(DeleteBehavior.Cascade);
+        
 
         //--- Chair tábla relációi ---
 
             modelBuilder.Entity<Chair>()
                 .HasIndex(chair => chair.Id)
                 .IsUnique();
+
+            */
 
             modelBuilder.Entity<Chair>()
                 .HasKey(chair => chair.Id);

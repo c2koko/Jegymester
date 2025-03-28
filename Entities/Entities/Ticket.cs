@@ -1,6 +1,6 @@
 ﻿namespace Jegymester.DataContext.Entities
 {
-    public class Ticket
+    public class Ticket         // !!!!!!!! kérdés: Tiket nem tartalmazza a Chair Id értékét? ugye az a szoba-sor-oszlop hármas !!!!!!!!!!!!!!
     {
         public int Id { get; set; } //TicketId
         public DateTime Date { get; set; }

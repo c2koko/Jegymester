@@ -2,10 +2,8 @@
 {
     public class Chair
     {
-        public int Id {  get; set; } //ChairId
-        public int Collumm { get; set; }
-        public int Row { get; set; }
-        public List<RoomChair> RoomsChairs { get; set; }
-      
+        public int Id {  get; set; } //tartalmaz 2 objektumot, (nem szoba-) sor-oszlop
+        public int RoomId { get; set; } // foreign key
+        public bool IsReserved { get; set; } // false - nem foglalt, true - foglalt
     }
 }
