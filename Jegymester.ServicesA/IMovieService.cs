@@ -18,17 +18,17 @@ namespace Jegymester.Services
 
     public class MovieService : IMovieService
     {
-        public Task<bool> DeleteMovieAsync(int movieId)
+        public async Task<bool> DeleteMovieAsync(int movieId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<MovieDto>> GetAllMoviesOnScreenengAsync()
+        public async Task<IEnumerable<MovieDto>> GetAllMoviesOnScreenengAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<MovieDto> GetMovieByIdAsync(int movieId)
+        public async Task<MovieDto> GetMovieByIdAsync(int movieId)
         {
             throw new NotImplementedException();
         }
@@ -38,7 +38,7 @@ namespace Jegymester.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateMovieAsync(MovieUpdateDto dto)
+        public async Task<bool> UpdateMovieAsync(MovieUpdateDto dto)
         {
             throw new NotImplementedException();
         }
