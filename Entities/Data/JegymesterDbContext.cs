@@ -80,6 +80,17 @@ namespace Jegymester.DataContext.Data
                 .HasForeignKey(scr => scr.RoomId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+            // Room |1 <=> N| Chair
+
+            modelBuilder.Entity<Chair>()
+                .HasOne(chr => chr.Room)
+                .WithMany(r => r.chairs)
+                .HasForeignKey(chr => chr.RoomId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
         //--- Room tábla relációi ---
         
         /*

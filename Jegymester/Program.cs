@@ -13,7 +13,7 @@ using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Jegymester.Services;
 
-UtilitiesClass.PrintBanner();
+//UtilitiesClass.PrintBanner();
 
 
 
