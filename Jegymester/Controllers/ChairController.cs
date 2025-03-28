@@ -5,24 +5,51 @@ using Jegymester.DataContext.Entities;
 using Microsoft.EntityFrameworkCore;
 using Jegymester.DataContext.Data;
 using Jegymester.DataContext.Dtos;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Jegymester.Services;
 
 
 namespace Jegymester
 {
     [ApiController]
+    [Route("chairs")]
     public class ChairController : ControllerBase
     {
         JegymesterDbContext _dbContext;
-        public ChairController(JegymesterDbContext dbContext)
+        private readonly IChairService _chairService;
+        public ChairController(JegymesterDbContext dbContext, IChairService chairService)
         {
             _dbContext = dbContext;
+            _chairService = chairService;
         }
         [HttpPatch] // részleges módosítás
-        public async Task<IActionResult> UpdateReservation([FromBody] int id)
+        public async Task<IActionResult> UpdateReservation(int id)
         {
-            throw new NotImplementedException();/*
-            var id = await _foodService.CreateFoodAsync(foodDto);
-            return CreatedAtAction(nameof(GetFoodById), new { id = food.Id }, food); */
+            try
+            {
+                var toggle = await _chairService.UpdateReservation(id);
+                if (!toggle)
+                {
+                    return NotFound("A szék nem található, a státusza így nem lett módosítva");
+                }
+                return Ok();                
+            }
+            catch (Exception exception) 
+            {
+                return NotFound(exception.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Chair>>> GetAllChairs()
+        {
+            var chairs = await _chairService.GetAllChair();
+            return Ok(chairs);
+        }
+        [HttpGet("available/{roomId}")]
+        public async Task<ActionResult<IEnumerable<Chair>>> GetAvailableChairsForRoom(int roomId)
+        {
+            var availableChairs = await _chairService.GetAvailableChairsForRoom(roomId);
+            return Ok(availableChairs);
         }
     }
 }

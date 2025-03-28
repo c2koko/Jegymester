@@ -11,6 +11,8 @@ namespace Jegymester.DataContext.Data
         public DbSet<Screening> Screenings { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Chair> Chairs { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

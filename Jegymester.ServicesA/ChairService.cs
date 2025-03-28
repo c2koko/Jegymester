@@ -1,5 +1,6 @@
 ﻿using Jegymester.DataContext.Data;
 using Jegymester.DataContext.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,23 +13,35 @@ namespace Jegymester.Services
     {
         Task<IEnumerable<Chair>> GetAllChair(); // visszaadja a székeket kihangsúlyozva foglalt-e
         Task<bool> UpdateReservation(int id); // jegyvásárlás és film lejátszás után átírja a bool-t
+        Task<IEnumerable<Chair>> GetAvailableChairsForRoom(int room);// front-end interface - szabad székek kilistázása miatt kelleni fog, fontos
     }
     class ChairService : IChairService
     {
-        JegymesterDbContext _dbContext;
+        private readonly JegymesterDbContext _dbContext;
         public ChairService(JegymesterDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public Task<IEnumerable<Chair>> GetAllChair()
+        public async Task<IEnumerable<Chair>> GetAllChair()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Chairs.ToListAsync();
         }
 
-        public Task<bool> UpdateReservation(int id)
+        public async Task<IEnumerable<Chair>> GetAvailableChairsForRoom(int room)
         {
-            var chair = _dbContext.Chairs.Where(i => i.Id == id); // id kiválasztva
-            throw new NotImplementedException();
+            return await _dbContext.Chairs.Where(c => c.RoomId == room && !c.IsReserved).ToListAsync();
+        }
+
+        public async Task<bool> UpdateReservation(int id)
+        {
+            var chair = await _dbContext.Chairs.Where(i => i.Id == id).FirstOrDefaultAsync(); // id kiválasztva
+            if(chair == null)
+            {
+                return false;
+            }
+            chair.IsReserved = !chair.IsReserved;
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

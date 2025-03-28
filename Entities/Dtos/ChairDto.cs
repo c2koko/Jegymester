@@ -11,7 +11,8 @@ namespace Jegymester.DataContext.Dtos
     {
         public int Id { get; set; }
         public bool IsReserved { get; set; }
-
+        //ezek a kódok (lefele) nem lesznek használva, de jobb he bent vannak
+        public int RoomId { get; set; }
         public ChairDto(Chair chair) { Id = chair.Id; IsReserved = chair.IsReserved; } // Konstruktor
         public ChairDto() { } // Üres konstruktor
     }
