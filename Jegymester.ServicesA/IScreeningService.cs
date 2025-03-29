@@ -8,12 +8,15 @@ namespace Jegymester.Services
 {
     public interface IScreeningService
     {
-        Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto);
-        Task<IEnumerable<ScreeningDto>> GetAllScreeningsAsync();
-        Task<IEnumerable<ScreeningDto>> GetScreeningsByMovieIdAsync(int movieId);
-        Task<ScreeningDto> GetScreeningByIdAsync(int screeningId);
-        Task<bool> DeleteScreeningAsync(int screeningId);
-        Task<ScreeningDto> UpdateScreeningAsync(int screeningId, ScreeningUpdateDto screeningUpdateDto);
+        Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto); // pipa
+        Task<IEnumerable<ScreeningDto>> GetAllScreeningsAsync(); // pipa
+        Task<IEnumerable<ScreeningDto>> GetScreeningsByMovieIdAsync(int movieId); // pipa
+        Task<ScreeningDto> GetScreeningByIdAsync(int screeningId); // pipa
+        Task<bool> DeleteScreeningAsync(int screeningId); // pipa
+        Task<ScreeningDto> UpdateScreeningAsync(int screeningId, ScreeningUpdateDto screeningUpdateDto); // pipa
+        Task<IEnumerable<TicketDto>> GetTicketsToScreeningAsync(int screeningId); // pipa
+        Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByDateAsync(DateTime date); // pipa
+        Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByRoomIdAsync(int roomId);
     }
 
     public class ScreeningService : IScreeningService
@@ -78,14 +81,61 @@ namespace Jegymester.Services
             return _mapper.Map<ScreeningDto>(screening);
         }
 
-        public Task<IEnumerable<ScreeningDto>>? GetScreeningsByMovieIdAsync(int movieId)
+        public async Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByDateAsync(DateTime date)
+        {
+            var screenings = await dbContext.Screenings
+                .Where(s=>s.ScreeningTime == date)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<ScreeningDetailsDto>>(screenings);
+        }
+
+       
+
+        public async Task<IEnumerable<ScreeningDto>> GetScreeningsByMovieIdAsync(int movieId)
         {
             var screenings = dbContext.Screenings
                 .Where(m => m.MovieId == movieId)
+                .Include(m=>m.Movie)
                 .ToListAsync();
-            return null;
-            //return _mapper.Map<IEnumerable<ScreeningDto>>(screenings);
-            //Ez még nem jó, úgyhogy erre rá kell néznem majd (By: Henrik)
+
+            if (screenings == null)
+            {
+                throw new KeyNotFoundException("There's no screening for this movie!");
+            }
+
+            return _mapper.Map<IEnumerable<ScreeningDto>>(screenings);
+        }
+
+        public async Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByRoomIdAsync(int roomId)
+        {
+            var screenings = dbContext.Screenings
+                .Where(r => r.RoomId == roomId)
+                .Include(r => r.Room)
+                .ToListAsync();
+
+            if (screenings == null)
+            {
+                throw new KeyNotFoundException("There's no screening in this room!");
+            }
+            return _mapper.Map<IEnumerable<ScreeningDetailsDto>>(screenings);
+           
+        }
+
+        public async Task<IEnumerable<TicketDto>> GetTicketsToScreeningAsync(int screeningId)
+        {
+            var screening = await dbContext.Screenings
+                 .Where(s => s.Id == screeningId)
+                 .Include(t => t.Tickets)
+                 .FirstOrDefaultAsync();
+
+            if (screening == null)
+            {
+                throw new KeyNotFoundException("Screening is not found!");
+            }
+            return _mapper.Map<IEnumerable<TicketDto>>(screening.Tickets);
+
+
         }
 
         public async Task<ScreeningDto> UpdateScreeningAsync(int screeningId, ScreeningUpdateDto screeningUpdateDto)
@@ -100,10 +150,6 @@ namespace Jegymester.Services
             await dbContext.SaveChangesAsync();
 
             return _mapper.Map<ScreeningDto>(screening);
-
-            
-
-           
         }
     }
 }

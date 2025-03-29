@@ -41,11 +41,13 @@ builder.Services.AddOpenApi();
 //connecting to the db
 builder.Services.AddDbContext<JegymesterDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// AutoMapper Config
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 //Service
 builder.Services.AddScoped<ITicketService, TicketService>();
+
+
+//AutoMapper config (Itt az AutoMapper!!!!)
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 

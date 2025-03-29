@@ -1,4 +1,8 @@
-﻿using Jegymester.DataContext.Dtos;
+﻿using AutoMapper;
+using Jegymester.DataContext.Data;
+using Jegymester.DataContext.Dtos;
+using Jegymester.DataContext.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,38 +13,85 @@ namespace Jegymester.Services
 {
     public interface IMovieService
     {
+        Task<IEnumerable<MovieDto>> GetAllMovies();
         Task<MovieDto> GetMovieByIdAsync(int movieId);
         Task<IEnumerable<MovieDto>> GetAllMoviesOnScreenengAsync();
-        Task<bool> UpdateMovieAsync(MovieDto dto);
         Task<bool> DeleteMovieAsync(int movieId);
-        Task<bool> UpdateMovieAsync(MovieUpdateDto dto);
+        Task<MovieDto> UpdateMovieAsync(int id,MovieUpdateDto moviedto);
+        Task<MovieDto> CreateMovieAsync(MovieCreateDto movieDto);
     }
 
     public class MovieService : IMovieService
     {
-        public async Task<bool> DeleteMovieAsync(int movieId)
+        private readonly JegymesterDbContext _context;
+        private readonly IMapper _mapper;
+
+        public MovieService(JegymesterDbContext context, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _mapper = mapper;
         }
 
+        public async Task<MovieDto> CreateMovieAsync(MovieCreateDto movieDto)
+        {
+            var movie = _mapper.Map<Movie>(movieDto);
+            await _context.Movies.AddAsync(movie);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<MovieDto>(movie);
+        }
+
+        public async Task<bool> DeleteMovieAsync(int movieId)
+        {
+            var movie = await _context.Movies.FindAsync(movieId);
+            if (movie == null)
+            {
+                throw new KeyNotFoundException("Movie not found!");
+            }
+
+            _context.Movies.Remove(movie);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<MovieDto>> GetAllMovies()
+        {
+            var movies = await _context.Movies
+                .Include(s => s.Screenings)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<MovieDto>>(movies);
+        }
+        //Ebben nem vagyok biztos, hogy azt csinálja, úgyhogy majd meg kell beszélni!
         public async Task<IEnumerable<MovieDto>> GetAllMoviesOnScreenengAsync()
         {
-            throw new NotImplementedException();
+            var movies = await _context.Movies
+                .Include(m=>m.Screenings)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<MovieDto>>(movies);
         }
 
         public async Task<MovieDto> GetMovieByIdAsync(int movieId)
         {
-            throw new NotImplementedException();
+            var movie = await _context.Movies.FindAsync(movieId);
+            if (movie==null)
+            {
+                throw new KeyNotFoundException("Movie not found!");
+            }
+            return _mapper.Map<MovieDto>(movie);
         }
 
-        public Task<bool> UpdateMovieAsync(MovieDto dto)
+        public async Task<MovieDto> UpdateMovieAsync(int id,MovieUpdateDto moviedto)
         {
-            throw new NotImplementedException();
-        }
+            var movie = await _context.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                throw new KeyNotFoundException("Movie not found!");
+            }
 
-        public async Task<bool> UpdateMovieAsync(MovieUpdateDto dto)
-        {
-            throw new NotImplementedException();
+            _mapper.Map(moviedto, movie);
+            _context.Movies.Update(movie);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<MovieDto>(movie);
         }
     }
 }

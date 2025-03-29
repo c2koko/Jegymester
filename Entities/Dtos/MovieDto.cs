@@ -15,7 +15,7 @@ namespace Jegymester.DataContext.Dtos
 
     public class MovieUpdateDto
     {
-        public string MovieName { get; set; }
+        public string? MovieName { get; set; }
         public string MovieDescrition { get; set; }
     }
 
