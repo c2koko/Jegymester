@@ -19,6 +19,7 @@ namespace Jegymester
         }
         // HttpPut egész objektumot ad vissza // ha csak egy részét, akkor HttpPatch
         // https://medium.com/@niteshsinghal85/httpput-or-httppatch-in-asp-net-core-ceaae99e320b
+        /*
         [HttpGet("RC.Room={RoomId};Rc.Chair={ChairId}")]
         public ActionResult<RoomChair> GetRoomChair(int RoomId, int ChairId)
         {
@@ -29,6 +30,7 @@ namespace Jegymester
             }
             return NotFound();
         }
+        */
     }
 }
 // szobában levő székek kezelése

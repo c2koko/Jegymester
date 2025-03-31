@@ -1,6 +1,7 @@
 ﻿using Jegymester.DataContext.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Abstractions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jegymester.DataContext.Data
 {
@@ -88,52 +89,51 @@ namespace Jegymester.DataContext.Data
             modelBuilder.Entity<Chair>()
                 .HasOne(chr => chr.Room)
                 .WithMany(r => r.chairs)
-                .HasForeignKey(chr => chr.RoomId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(chr => chr.RoomId);
 
-
-
-        //--- Room tábla relációi ---
-        
-        /*
-            modelBuilder.Entity<Room>()
-                .HasIndex(room => room.Id)
-                .IsUnique();
-
-            modelBuilder.Entity<Room>()
-                .HasKey(room => room.Id);
-
-            // Room |1 <=> N| RoomChair
-
-            modelBuilder.Entity<Room>()
-                .HasMany(room => room.RoomsChairs)
-                .WithOne(rc => rc.Room)
-                .HasForeignKey(rc => rc.RoomId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-        //--- RoomChair kapcsolótábla relációi ---
-
-            // öszetett kulcs
-            modelBuilder.Entity<RoomChair>()
-                .HasKey(rc => new { rc.RoomId, rc.ChairId });
-
-            modelBuilder.Entity<RoomChair>()
-                .HasOne(rc => rc.Chair)
-                .WithMany(chair => chair.RoomsChairs)
-                .HasForeignKey(rc => rc.ChairId)
-                .OnDelete(DeleteBehavior.Cascade);
-        
-
-        //--- Chair tábla relációi ---
-
-            modelBuilder.Entity<Chair>()
-                .HasIndex(chair => chair.Id)
-                .IsUnique();
-
-            */
+            // Chair
 
             modelBuilder.Entity<Chair>()
                 .HasKey(chair => chair.Id);
+
+            //--- Room tábla relációi ---
+
+            /*
+                modelBuilder.Entity<Room>()
+                    .HasIndex(room => room.Id)
+                    .IsUnique();
+
+                modelBuilder.Entity<Room>()
+                    .HasKey(room => room.Id);
+
+                // Room |1 <=> N| RoomChair
+
+                modelBuilder.Entity<Room>()
+                    .HasMany(room => room.RoomsChairs)
+                    .WithOne(rc => rc.Room)
+                    .HasForeignKey(rc => rc.RoomId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            //--- RoomChair kapcsolótábla relációi ---
+
+                // öszetett kulcs
+                modelBuilder.Entity<RoomChair>()
+                    .HasKey(rc => new { rc.RoomId, rc.ChairId });
+
+                modelBuilder.Entity<RoomChair>()
+                    .HasOne(rc => rc.Chair)
+                    .WithMany(chair => chair.RoomsChairs)
+                    .HasForeignKey(rc => rc.ChairId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+
+            //--- Chair tábla relációi ---
+
+                modelBuilder.Entity<Chair>()
+                    .HasIndex(chair => chair.Id)
+                    .IsUnique();
+
+                */
         }
     }
 }

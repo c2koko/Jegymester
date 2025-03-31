@@ -22,7 +22,7 @@ namespace Jegymester
             _dbContext = dbContext;
             _chairService = chairService;
         }
-        [HttpPatch] // részleges módosítás
+        [HttpPatch("UpdateReservation/{id}")] // részleges módosítás
         public async Task<IActionResult> UpdateReservation(int id)
         {
             try
@@ -36,14 +36,20 @@ namespace Jegymester
             }
             catch (Exception exception) 
             {
-                return NotFound(exception.Message);
+                return BadRequest(exception.Message);
             }
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Chair>>> GetAllChairs()
+        public async Task<ActionResult<IEnumerable<ChairDto>>> GetAllChairs()
         {
-            var chairs = await _chairService.GetAllChair();
-            return Ok(chairs);
+           try
+            {
+                return Ok(await _chairService.GetAllChair());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
         [HttpGet("available/{roomId}")]
         public async Task<ActionResult<IEnumerable<Chair>>> GetAvailableChairsForRoom(int roomId)

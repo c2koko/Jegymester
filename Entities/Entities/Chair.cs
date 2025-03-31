@@ -1,4 +1,6 @@
-﻿namespace Jegymester.DataContext.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Jegymester.DataContext.Entities
 {
     public class Chair
     {

@@ -13,7 +13,7 @@ using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Jegymester.Services;
 
-//UtilitiesClass.PrintBanner();
+UtilitiesClass.PrintBanner();
 
 
 
@@ -46,6 +46,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 //Service
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IChairService, ChairService>();
 
 var app = builder.Build();
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jegymester.DataContext.Dtos;
 
 namespace Jegymester.Services
 {
@@ -25,6 +26,9 @@ namespace Jegymester.Services
             CreateMap<TicketCreateDto, Ticket>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
             .ForMember(dest => dest.ScreeningId, opt => opt.MapFrom(src => src.ScreeningId));
+
+            //Chair mapping
+            CreateMap<Chair, ChairDto>();
         }
     }
 }

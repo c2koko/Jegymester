@@ -1,4 +1,6 @@
-﻿using Jegymester.DataContext.Data;
+﻿using AutoMapper;
+using Jegymester.DataContext.Data;
+using Jegymester.DataContext.Dtos;
 using Jegymester.DataContext.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,30 +13,43 @@ namespace Jegymester.Services
 {
     public interface IChairService
     {
-        Task<IEnumerable<Chair>> GetAllChair(); // visszaadja a székeket kihangsúlyozva foglalt-e
+        Task<IEnumerable<ChairDto>> GetAllChair(); // visszaadja a székeket kihangsúlyozva foglalt-e
         Task<bool> UpdateReservation(int id); // jegyvásárlás és film lejátszás után átírja a bool-t
-        Task<IEnumerable<Chair>> GetAvailableChairsForRoom(int room);// front-end interface - szabad székek kilistázása miatt kelleni fog, fontos
+        Task<IEnumerable<ChairDto>> GetAvailableChairsForRoom(int room);// front-end interface - szabad székek kilistázása miatt kelleni fog, fontos
     }
-    class ChairService : IChairService
+    public class ChairService : IChairService
     {
         private readonly JegymesterDbContext _dbContext;
-        public ChairService(JegymesterDbContext dbContext)
+        private readonly IMapper _mapper;
+        public ChairService(JegymesterDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
-        public async Task<IEnumerable<Chair>> GetAllChair()
+        public async Task<IEnumerable<ChairDto>> GetAllChair()
         {
-            return await _dbContext.Chairs.ToListAsync();
+            return (IEnumerable<ChairDto>)_mapper.Map<List<Chair>, List<ChairDto>>( await _dbContext.Chairs.ToListAsync() );
+
+            /* In cas mapping would not work
+            List<Chair> chiars = await _dbContext.Chairs.ToListAsync();
+            List<ChairDto> mappedChirs = new List<ChairDto>();
+            chiars.ForEach(chair =>
+            {
+                mappedChirs.Add(_mapper.Map<ChairDto>(chair));
+            });
+
+            return mappedChirs;
+            */
         }
 
-        public async Task<IEnumerable<Chair>> GetAvailableChairsForRoom(int room)
+        public async Task<IEnumerable<ChairDto>> GetAvailableChairsForRoom(int room)
         {
-            return await _dbContext.Chairs.Where(c => c.RoomId == room && !c.IsReserved).ToListAsync();
+            return (IEnumerable<ChairDto>)_mapper.Map<List<Chair>, List<ChairDto>>( await _dbContext.Chairs.Where(c => c.RoomId == room && !c.IsReserved).ToListAsync() );
         }
 
         public async Task<bool> UpdateReservation(int id)
         {
-            var chair = await _dbContext.Chairs.Where(i => i.Id == id).FirstOrDefaultAsync(); // id kiválasztva
+            var chair = await _dbContext.Chairs.FindAsync(id);
             if(chair == null)
             {
                 return false;
