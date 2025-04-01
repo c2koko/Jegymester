@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Jegymester.DataContext.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +12,24 @@ namespace Jegymester.DataContext.Dtos
     {
         public int Id { get; set; }
         public string MovieName { get; set; }
-        public string MovieDescrition { get; set; }
-    }
-
-    public class MovieUpdateDto
-    {
-        public string? MovieName { get; set; }
-        public string MovieDescrition { get; set; }
+        public string MovieDescription { get; set; }
+        public int MovieDuration { get; set; }
+        public List<Screening> Screenings { get; set; }
     }
 
     public class MovieCreateDto
     {
         public string MovieName { get; set; }
-        public string MovieDescrition { get; set; }
+        public string MovieDescription { get; set; }
+        public int MovieDuration { get; set; }
+    }
+
+    public class MovieUpdateDto
+    {
+        public string MovieName { get; set; }
+        public string MovieDescription { get; set; }
+        public int MovieDuration { get; set; }
     }
 }
+
+

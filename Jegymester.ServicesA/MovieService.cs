@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿/*============================================= UNDER DEV =========================================*/
+using AutoMapper;
 using Jegymester.DataContext.Data;
 using Jegymester.DataContext.Dtos;
 using Jegymester.DataContext.Entities;
@@ -13,12 +14,17 @@ namespace Jegymester.Services
 {
     public interface IMovieService
     {
+        Task<MovieDto> GetMovieByIdAsync(int i);
+        Task<IEnumerable<MovieDto>> GetAllMovies();
+
+        /*
         Task<IEnumerable<MovieDto>> GetAllMovies();
         Task<MovieDto> GetMovieByIdAsync(int movieId);
         Task<IEnumerable<MovieDto>> GetAllMoviesOnScreenengAsync();
         Task<bool> DeleteMovieAsync(int movieId);
         Task<MovieDto> UpdateMovieAsync(int id,MovieUpdateDto moviedto);
         Task<MovieDto> CreateMovieAsync(MovieCreateDto movieDto);
+        */
     }
 
     public class MovieService : IMovieService
@@ -32,6 +38,30 @@ namespace Jegymester.Services
             _mapper = mapper;
         }
 
+        public async Task<MovieDto> GetMovieByIdAsync(int i) 
+        {
+            var movie = await _context.Movies
+                .Include(s => s.Screenings)
+                    .ThenInclude(t => t.Tickets)
+                .FirstOrDefaultAsync(m => m.Id == i);
+            if (movie == null)
+            {
+                throw new KeyNotFoundException("Movie not found.");
+            }
+            return _mapper.Map<MovieDto>(movie);
+        }
+
+        public async Task<IEnumerable<MovieDto>> GetAllMovies() 
+        {
+            var movies = await _context.Movies
+                .Include(s => s.Screenings)
+                    .ThenInclude(t => t.Tickets)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<MovieDto>>(movies);
+        }
+
+
+        /*
         public async Task<MovieDto> CreateMovieAsync(MovieCreateDto movieDto)
         {
             var movie = _mapper.Map<Movie>(movieDto);
@@ -93,5 +123,7 @@ namespace Jegymester.Services
 
             return _mapper.Map<MovieDto>(movie);
         }
+        */
     }
 }
+/*============================================= UNDER DEV ========================================= */

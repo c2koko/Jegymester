@@ -6,16 +6,80 @@ namespace Jegymester.DataContext.Data
 {
     public class JegymesterDbContext(DbContextOptions<JegymesterDbContext> options) : DbContext(options)
     {
-        public DbSet<Ticket> Tickets { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Screening> Screenings { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
+        
         public DbSet<Movie> Movies { get; set; }
-        public DbSet<Room> Rooms { get; set; }
-        public DbSet<Chair> Chairs { get; set; }
-        public DbSet<RoomChair> RoomsChairs { get; set; }
+        public DbSet<Screening> Screenings { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //--------Movie Relations--------//
+            //PK
+            modelBuilder.Entity<Movie>()
+                .HasIndex(m => m.Id)
+                .IsUnique();
+            modelBuilder.Entity<Movie>()
+                .HasKey(m => m.Id);
+            //Screening |N <=> 1| Movie kifejtve screening relationsben
+
+
+            //--------Role relations--------//
+            // Role |N <=> 1| User
+            modelBuilder.Entity<Role>() //Principal keyt használunk primary key helyett a role - user összeköttetésnél
+                .HasMany(r => r.Users)
+                .WithOne(u => u.Role)
+                .HasPrincipalKey(r => r.PermaId);
+
+            //--------User relations--------//
+            // Role |N <=> 1| User kifejtve role relationsben
+            // Ticket |N <=> 1| User kifejtve ticket relationsben
+
+
+            //--------Screening relations--------//
+            //PK
+            modelBuilder.Entity<Screening>()
+                .HasIndex(s => s.Id)
+                .IsUnique();
+            modelBuilder.Entity<Screening>()
+                .HasKey(s => s.Id);
+
+            // Screening |N <=> 1| Movie
+            modelBuilder.Entity<Screening>()
+                .HasOne(s => s.Movie)
+                .WithMany(m => m.Screenings)
+                .HasForeignKey(s => s.MovieId);
+            //.OnDelete(DeleteBehavior.Cascade); még teszt alatt
+
+            // Ticket |N <=> 1| Screening kifejtve ticket relationsben
+
+
+            //--------Ticket relations--------//
+            //PK
+            modelBuilder.Entity<Ticket>()
+                .HasIndex(t => t.Id)
+                .IsUnique();
+            modelBuilder.Entity<Ticket>()
+                .HasKey(t => t.Id);
+
+            // Ticket |N <=> 1| User               
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.User)
+                .WithMany(u => u.Tickets)
+                .HasForeignKey(t => t.UserId);
+            //.OnDelete(DeleteBehavior.Cascade);
+
+            // Ticket |N <=> 1| Screening
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.Screening)
+                .WithMany(s => s.Tickets)
+                .HasForeignKey(t => t.ScreeningId);
+
+
+            /*
         //--- User tábla relációi ---
 
             modelBuilder.Entity<User>()
@@ -119,6 +183,7 @@ namespace Jegymester.DataContext.Data
 
             modelBuilder.Entity<Chair>()
                 .HasKey(chair => chair.Id);
+            */
         }
     }
 }

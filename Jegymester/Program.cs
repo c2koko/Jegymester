@@ -13,10 +13,14 @@ using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Jegymester.Services;
 
-UtilitiesClass.PrintBanner();
+
+//banner - comment it out before migrations and database updates
+//UtilitiesClass.PrintBanner();
+//https://localhost:7137/scalar/v1 <--- Ctrl + Click to open to easily test API stuff
 
 
 
+//Authentication and Authorization stuff
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -43,10 +47,25 @@ builder.Services.AddDbContext<JegymesterDbContext>(options => options.UseSqlServ
 
 
 //Service
+builder.Services.AddScoped<ITestData, TestData>(); //this one is for clearing and inserting test data
+//============================================= UNDER DEV =========================================
+//builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IAdministratorService, AdministratorService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IScreeningService, ScreeningService>();
+builder.Services.AddScoped<ICashierService, CashierService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
-//AutoMapper config (Itt az AutoMapper!!!!)
+//enélkül valamiért nem mûködnek rendesen az hívások, valami Json.Serialization cycle miatt
+builder.Services.AddMvc()
+               .AddJsonOptions(opt =>
+               {
+                   opt.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+               });
+
+//AutoMapper config
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();

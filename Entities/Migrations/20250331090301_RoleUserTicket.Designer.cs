@@ -4,6 +4,7 @@ using Jegymester.DataContext.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jegymester.DataContext.Migrations
 {
     [DbContext(typeof(JegymesterDbContext))]
-    partial class JegymesterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250331090301_RoleUserTicket")]
+    partial class RoleUserTicket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,16 +116,10 @@ namespace Jegymester.DataContext.Migrations
                     b.Property<int>("ScreeningId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("TicketVerified")
-                        .HasColumnType("bit");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.HasIndex("ScreeningId");
 
@@ -189,7 +186,7 @@ namespace Jegymester.DataContext.Migrations
                         .IsRequired();
 
                     b.HasOne("Jegymester.DataContext.Entities.User", "User")
-                        .WithMany("Tickets")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -222,11 +219,6 @@ namespace Jegymester.DataContext.Migrations
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Screening", b =>
-                {
-                    b.Navigation("Tickets");
-                });
-
-            modelBuilder.Entity("Jegymester.DataContext.Entities.User", b =>
                 {
                     b.Navigation("Tickets");
                 });

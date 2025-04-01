@@ -1,14 +1,17 @@
-﻿namespace Jegymester.DataContext.Entities
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Jegymester.DataContext.Entities
 {
     
     public class Movie
     {
-        public int Id {  get; set; } //MovieId
-        public string MovieName {  get; set; }
+        public int Id {  get; set; }
+        public required string MovieName {  get; set; }
         public string? MovieDescription { get; set; }
+        public int MovieDuration { get; set; }
 
-        //Egy movie-hoz több screening
-        public List<Screening>? Screenings { get; set; }
-       
+        //---------------1 moviehoz több screening
+        public List<Screening> Screenings { get; set; }
+
     }
 }

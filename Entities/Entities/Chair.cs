@@ -1,4 +1,5 @@
-﻿namespace Jegymester.DataContext.Entities
+﻿/* ============================================= UNDER DEV =========================================
+namespace Jegymester.DataContext.Entities
 {
     public class Chair
     {
@@ -9,3 +10,4 @@
       
     }
 }
+============================================= UNDER DEV =========================================*/

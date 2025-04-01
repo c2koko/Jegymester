@@ -1,26 +1,21 @@
-﻿namespace Jegymester.DataContext.Entities
+﻿using System.Net.Sockets;
+
+namespace Jegymester.DataContext.Entities
 {
     public class User
     {
-        public int Id {  get; set; } //UserId
-        public string Name {  get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        public int Id {  get; set; }
         public string Username { get; set; }
+        public string Password { get; set; } //kesobb átírni passwordHash-re
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
 
-        // Egy ember egy role
+        //---------------1 role/user
+        public int RoleId { get; set; } //FK - ez kapcsolja a rolet a userhez
+        public Role Role { get; set; }
 
-       /*
-        * A RoleId property azért kell, hogy idegen kulcsént
-        * meg lehessen adni a User-hez tartozó Role-t, ami aztán
-        * a Role property-ben lessz referenciaként
-        */
-        public int RoleId { get; set; }
-        public Role Role {  get; set; }
-
-        //Egy user több ticket
-        
+        //---------------több ticket/user
         public List<Ticket> Tickets { get; set; }
-
     }
 }

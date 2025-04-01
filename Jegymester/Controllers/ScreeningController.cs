@@ -1,12 +1,13 @@
-﻿using Jegymester.Dtos;
+﻿/*============================================= UNDER DEV =========================================*/
+using Jegymester.Dtos;
 using Jegymester.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jegymester.Controllers
 {
-    
-    [Route("api/[controller]")]
+
+    [Route("api/Screening")]
     [ApiController]
     public class ScreeningController : ControllerBase
     {
@@ -17,8 +18,22 @@ namespace Jegymester.Controllers
             _screeningService = screeningService;
         }
 
+        [HttpGet("GetScreeningById/{id}")]
+        public async Task<IActionResult> GetScreeningById(int id)
+        {
+            var screening = await _screeningService.GetScreeningByIdAsync(id);
+            return Ok(screening);
+        }
 
-        [HttpGet]
+        [HttpGet("GetScreeningByMovieId/{movieId}")]
+        public async Task<IActionResult> GetScreeningsByMovieId(int movieId)
+        {
+            var screenings = await _screeningService.GetScreeningsByMovieIdAsync(movieId);
+            return Ok(screenings);
+        }
+
+        
+        [HttpGet("GetAllScreenings")]
         public async Task<IActionResult> GetAllScreenings()
         {
             var screenings = await _screeningService.GetAllScreeningsAsync();
@@ -26,14 +41,9 @@ namespace Jegymester.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetScreeningById(int id)
-        {
-            var screening = await _screeningService.GetScreeningByIdAsync(id);
-            return Ok(screening);
-        }
 
 
+        /*
         [HttpPost]
         public async Task<IActionResult> CreateScreening([FromBody] ScreeningCreateDto screeningDto)
         {
@@ -62,12 +72,7 @@ namespace Jegymester.Controllers
         }
 
 
-        [HttpGet("{movieId}")]
-        public async Task<IActionResult> GetScreeningsByMovieId(int movieId)
-        {
-            var screenings = await _screeningService.GetScreeningsByMovieIdAsync(movieId);
-            return Ok(screenings);
-        }
+ 
 
 
         [HttpGet("{id}")]
@@ -92,5 +97,8 @@ namespace Jegymester.Controllers
             var screenings = await _screeningService.GetScreeningsByRoomIdAsync(roomId);
             return Ok(screenings);
         }
+
+        */
     }
 }
+/*============================================= UNDER DEV ========================================= */

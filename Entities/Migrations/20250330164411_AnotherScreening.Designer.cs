@@ -4,6 +4,7 @@ using Jegymester.DataContext.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jegymester.DataContext.Migrations
 {
     [DbContext(typeof(JegymesterDbContext))]
-    partial class JegymesterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250330164411_AnotherScreening")]
+    partial class AnotherScreening
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,6 +68,9 @@ namespace Jegymester.DataContext.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
                     b.ToTable("Roles");
                 });
 
@@ -110,63 +116,14 @@ namespace Jegymester.DataContext.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<int>("ScreeningId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("TicketVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UserId")
+                    b.Property<int?>("ScreeningId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.HasIndex("ScreeningId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("Jegymester.DataContext.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Users");
+                    b.ToTable("Ticket");
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Screening", b =>
@@ -182,33 +139,9 @@ namespace Jegymester.DataContext.Migrations
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Ticket", b =>
                 {
-                    b.HasOne("Jegymester.DataContext.Entities.Screening", "Screening")
+                    b.HasOne("Jegymester.DataContext.Entities.Screening", null)
                         .WithMany("Tickets")
-                        .HasForeignKey("ScreeningId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Jegymester.DataContext.Entities.User", "User")
-                        .WithMany("Tickets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Screening");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Jegymester.DataContext.Entities.User", b =>
-                {
-                    b.HasOne("Jegymester.DataContext.Entities.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .HasPrincipalKey("PermaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
+                        .HasForeignKey("ScreeningId");
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Movie", b =>
@@ -216,17 +149,7 @@ namespace Jegymester.DataContext.Migrations
                     b.Navigation("Screenings");
                 });
 
-            modelBuilder.Entity("Jegymester.DataContext.Entities.Role", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("Jegymester.DataContext.Entities.Screening", b =>
-                {
-                    b.Navigation("Tickets");
-                });
-
-            modelBuilder.Entity("Jegymester.DataContext.Entities.User", b =>
                 {
                     b.Navigation("Tickets");
                 });

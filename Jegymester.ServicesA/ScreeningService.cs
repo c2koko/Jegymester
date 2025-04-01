@@ -1,35 +1,80 @@
-﻿using Jegymester.Dtos;
+﻿/*============================================= UNDER DEV =========================================*/
+using Jegymester.Dtos;
 using Jegymester.DataContext.Entities;
 using Jegymester.DataContext.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Jegymester.DataContext.Dtos;
 
 namespace Jegymester.Services
 {
     public interface IScreeningService
     {
+
+        Task<IEnumerable<ScreeningDto>> GetAllScreeningsAsync();
+        Task<IEnumerable<ScreeningDto>> GetScreeningsByMovieIdAsync(int movieId);
+        Task<ScreeningDto> GetScreeningByIdAsync(int screeningId);
+        /*
         Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto); // pipa
-        Task<IEnumerable<ScreeningDto>> GetAllScreeningsAsync(); // pipa
-        Task<IEnumerable<ScreeningDto>> GetScreeningsByMovieIdAsync(int movieId); // pipa
-        Task<ScreeningDto> GetScreeningByIdAsync(int screeningId); // pipa
+         // pipa
         Task<bool> DeleteScreeningAsync(int screeningId); // pipa
         Task<ScreeningDto> UpdateScreeningAsync(int screeningId, ScreeningUpdateDto screeningUpdateDto); // pipa
         Task<IEnumerable<TicketDto>> GetTicketsToScreeningAsync(int screeningId); // pipa
         Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByDateAsync(DateTime date); // pipa
         Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByRoomIdAsync(int roomId);
+        */
     }
 
     public class ScreeningService : IScreeningService
     {
-        private readonly JegymesterDbContext dbContext;
+        private readonly JegymesterDbContext _context;
         private readonly IMapper _mapper;
 
-        public ScreeningService(JegymesterDbContext dbContext,IMapper mapper)
+        public ScreeningService(JegymesterDbContext context,IMapper mapper)
         {
-            this.dbContext = dbContext;
-            this._mapper = mapper;
+            _context = context;
+            _mapper = mapper;
         }
 
+        public async Task<ScreeningDto> GetScreeningByIdAsync(int screeningId)
+        {
+            var screening = await _context.Screenings 
+                .Include(m => m.Movie) //ez egy loopot okoz
+                .Include(t => t.Tickets)
+                .FirstOrDefaultAsync(m => m.Id == screeningId);
+            //.FindAsync(screeningId);
+            if (screening == null)
+            {
+                throw new KeyNotFoundException("Screening is not found");
+            }
+            return _mapper.Map<ScreeningDto>(screening);
+        }
+
+        public async Task<IEnumerable<ScreeningDto>> GetAllScreeningsAsync()
+        {
+            var screenings = await _context.Screenings
+                .Include(t => t.Tickets)
+                .Include(m => m.Movie)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<ScreeningDto>>(screenings);
+        }
+
+        public async Task<IEnumerable<ScreeningDto>> GetScreeningsByMovieIdAsync(int movieId)
+        {
+            var screenings = await _context.Screenings
+                .Where(m => m.MovieId == movieId)
+                .Include(m => m.Movie)
+                .ToListAsync();
+
+            if (screenings == null)
+            {
+                throw new KeyNotFoundException("There's no screening for this movie!");
+            }
+
+            return _mapper.Map<IEnumerable<ScreeningDto>>(screenings);
+        }
+
+        /*
         public async Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto)
         {
             var screening = new Screening
@@ -61,25 +106,9 @@ namespace Jegymester.Services
             return true;
         }
 
-        public async Task<IEnumerable<ScreeningDto>> GetAllScreeningsAsync()
-        {
-            var screenings = await dbContext.Screenings
-                .Include(t=>t.Tickets)
-                .Include(r=>r.Room)
-                .Include(m=>m.Movie)
-                .ToListAsync();
-            return _mapper.Map<IEnumerable<ScreeningDto>>(screenings);
-        }
+        
 
-        public async Task<ScreeningDto> GetScreeningByIdAsync(int screeningId)
-        {
-            var screening = await dbContext.Screenings.FindAsync(screeningId);
-            if(screening == null)
-            {
-                throw new KeyNotFoundException("Screening is not found");
-            }
-            return _mapper.Map<ScreeningDto>(screening);
-        }
+
 
         public async Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByDateAsync(DateTime date)
         {
@@ -92,20 +121,7 @@ namespace Jegymester.Services
 
        
 
-        public async Task<IEnumerable<ScreeningDto>> GetScreeningsByMovieIdAsync(int movieId)
-        {
-            var screenings = dbContext.Screenings
-                .Where(m => m.MovieId == movieId)
-                .Include(m=>m.Movie)
-                .ToListAsync();
 
-            if (screenings == null)
-            {
-                throw new KeyNotFoundException("There's no screening for this movie!");
-            }
-
-            return _mapper.Map<IEnumerable<ScreeningDto>>(screenings);
-        }
 
         public async Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByRoomIdAsync(int roomId)
         {
@@ -151,5 +167,7 @@ namespace Jegymester.Services
 
             return _mapper.Map<ScreeningDto>(screening);
         }
+        */
     }
 }
+/*============================================= UNDER DEV ========================================= */
