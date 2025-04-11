@@ -5,11 +5,14 @@ using Jegymester.DataContext.Entities;
 using Jegymester.Services;
 using Jegymester.Dtos;
 using Jegymester.DataContext.Dtos;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Jegymester.Controllers
 {
     [Route("api/Ticket")]
     [ApiController]
+    [Authorize(Roles = "RegisteredUser")]
     public class TicketController : ControllerBase
     {
 
@@ -22,9 +25,19 @@ namespace Jegymester.Controllers
 
 
         [HttpPost("CreateTicket")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateTicketAnonymusAsync([FromBody] TicketCreateDto ticketDto)
+        {
+            var ticket = await _ticketService.CreateTicketAsync(ticketDto, null);
+            return CreatedAtAction(nameof(CreateTicket), new { id = ticket.Id }, ticket);
+        }
+
+        [HttpPost("CreateTicket")]
+        [Authorize(Roles = "RegisteredUser")]
         public async Task<IActionResult> CreateTicket([FromBody] TicketCreateDto ticketDto)
         {
-            var ticket = await _ticketService.CreateTicketAsync(ticketDto);
+            int userIdFromClaim = int.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+            var ticket = await _ticketService.CreateTicketAsync(ticketDto, userIdFromClaim);
             return CreatedAtAction(nameof(CreateTicket), new { id = ticket.Id }, ticket);
         }
 

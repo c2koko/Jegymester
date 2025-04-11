@@ -1,6 +1,7 @@
 ﻿/* ============================================= UNDER DEV =========================================*/
 using Jegymester.DataContext.Dtos;
 using Jegymester.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Jegymester.Controllers
 {
     [Route("api/Admin")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class AdministratorController : ControllerBase
     {
         private readonly IAdministratorService _administratorService;

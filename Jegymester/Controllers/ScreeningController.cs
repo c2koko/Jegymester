@@ -1,6 +1,7 @@
 ﻿/*============================================= UNDER DEV =========================================*/
 using Jegymester.Dtos;
 using Jegymester.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Jegymester.Controllers
 
     [Route("api/Screening")]
     [ApiController]
+    [AllowAnonymous]
     public class ScreeningController : ControllerBase
     {
         public readonly IScreeningService _screeningService;

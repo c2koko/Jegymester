@@ -9,7 +9,7 @@ namespace Jegymester.Services
 {
     public interface ITicketService
     {
-        Task<TicketDto> CreateTicketAsync(TicketCreateDto ticketDto);
+        Task<TicketDto> CreateTicketAsync(TicketCreateDto ticketDto, int? userId);
         Task<bool> DeleteTicketAsync(int id);
     }
     public class TicketService : ITicketService
@@ -24,12 +24,14 @@ namespace Jegymester.Services
         }
 
         //create ticket
-        public async Task<TicketDto> CreateTicketAsync(TicketCreateDto foodDto)
+        public async Task<TicketDto> CreateTicketAsync(TicketCreateDto ticketDto, int? userId)
         {
-            var food = _mapper.Map<Ticket>(foodDto);
-            await _context.Tickets.AddAsync(food);
+            var ticket = _mapper.Map<Ticket>(ticketDto);
+            ticket.UserId = userId; // NULL ha a user nem regisztrált
+
+            await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
-            return _mapper.Map<TicketDto>(food);
+            return _mapper.Map<TicketDto>(ticket);
         }
 
         //delete ticket

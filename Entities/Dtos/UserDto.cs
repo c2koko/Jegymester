@@ -23,7 +23,7 @@ namespace Jegymester.DataContext.Dtos
     public class UserRegisterDto
     {
         public string Username { get; set; }
-        public string Password { get; set; } //kesobb átírni passwordHash-re
+        public string Password { get; set; } 
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

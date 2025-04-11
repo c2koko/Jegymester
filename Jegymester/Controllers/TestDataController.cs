@@ -5,11 +5,13 @@ using Jegymester.Services;
 //using Jegymester.Dtos;
 using Microsoft.CodeAnalysis.CSharp;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jegymester.Controllers
 {
     [Route("api/TestData")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class TestDataController : ControllerBase
     {
         private readonly ITestData _testData;

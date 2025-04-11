@@ -21,7 +21,6 @@ namespace Jegymester.Dtos
         public DateTime DateOfPurchase { get; set; }
         public int Price { get; set; }
         public bool TicketVerified { get; set; } = false;
-        public int UserId { get; set; }
         public int ScreeningId { get; set; }
     }
 

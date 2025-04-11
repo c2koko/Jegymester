@@ -41,7 +41,6 @@ namespace Jegymester.Services
             //Ticket Mapping
             CreateMap<Ticket, TicketDto>().ReverseMap();
             CreateMap<TicketCreateDto, Ticket>()
-                .ForMember(d => d.UserId, o => o.MapFrom(s => s.UserId))
                 .ForMember(d => d.ScreeningId, o => o.MapFrom(s => s.ScreeningId));
             CreateMap<TicketVerifyDto, Ticket>();
         }

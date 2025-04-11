@@ -6,12 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Jegymester.DataContext.Data;
 using Jegymester.Services;
 using Jegymester.DataContext.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Jegymester
 {
     [Route("api/Movie")]
     [ApiController]
+    [Authorize]
     public class MoviesController : ControllerBase
     {
        private readonly IMovieService _movieService;
@@ -23,6 +25,7 @@ namespace Jegymester
 
 
         [HttpGet("GetAllMovies")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllMovies()
         {
             var movies = await _movieService.GetAllMovies();
@@ -30,6 +33,7 @@ namespace Jegymester
         }
 
         [HttpGet("GetMovieById/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetMovieById(int id)
         {
             var movie = await _movieService.GetMovieByIdAsync(id);

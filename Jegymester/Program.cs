@@ -22,18 +22,19 @@ using Jegymester.Services;
 
 //Authentication and Authorization stuff
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"], // saját localhost
-        ValidAudience = builder.Configuration["Jwt:Audience"], // saját localhost
-        //IssuerSigningKey = new AsymmetricSecurityKey(Encoding.UTF8.GetBytes("saját jelszó")) // saját jelszó
-    };
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"], // saját localhost
+            ValidAudience = builder.Configuration["Jwt:Audience"], // saját localhost
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])) // saját jelszó
+        };
 });
 
 // Add services to the container.
