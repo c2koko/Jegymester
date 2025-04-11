@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jegymester.DataContext.Migrations
 {
     [DbContext(typeof(JegymesterDbContext))]
-    [Migration("20250411124436_PasswordHash")]
-    partial class PasswordHash
+    [Migration("20250411175152_NoChairVersion")]
+    partial class NoChairVersion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,9 @@ namespace Jegymester.DataContext.Migrations
 
                     b.Property<int>("MovieDuration")
                         .HasColumnType("int");
+
+                    b.Property<string>("MovieImg")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MovieName")
                         .IsRequired()
@@ -119,7 +122,7 @@ namespace Jegymester.DataContext.Migrations
                     b.Property<bool>("TicketVerified")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -193,9 +196,7 @@ namespace Jegymester.DataContext.Migrations
 
                     b.HasOne("Jegymester.DataContext.Entities.User", "User")
                         .WithMany("Tickets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Screening");
 

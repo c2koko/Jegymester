@@ -13,5 +13,8 @@ namespace Jegymester.DataContext.Entities
         //---------------1 moviehoz több screening
         public List<Screening> Screenings { get; set; }
 
+        // film kép
+        public string? MovieImg { get; set; }
+
     }
 }

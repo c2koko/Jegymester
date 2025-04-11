@@ -36,6 +36,9 @@ namespace Jegymester.DataContext.Migrations
                     b.Property<int>("MovieDuration")
                         .HasColumnType("int");
 
+                    b.Property<string>("MovieImg")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MovieName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

@@ -15,6 +15,8 @@ namespace Jegymester.DataContext.Dtos
         public string MovieDescription { get; set; }
         public int MovieDuration { get; set; }
         public List<Screening> Screenings { get; set; }
+        //kép, teszt
+        public string? MovieImg { get; set; }
     }
 
     public class MovieCreateDto
@@ -22,6 +24,8 @@ namespace Jegymester.DataContext.Dtos
         public string MovieName { get; set; }
         public string MovieDescription { get; set; }
         public int MovieDuration { get; set; }
+        //kép, teszt
+        public string? MovieImg { get; set; }
     }
 
     public class MovieUpdateDto
@@ -29,6 +33,8 @@ namespace Jegymester.DataContext.Dtos
         public string MovieName { get; set; }
         public string MovieDescription { get; set; }
         public int MovieDuration { get; set; }
+        //kép, teszt
+        public string? MovieImg { get; set; }
     }
 }
 

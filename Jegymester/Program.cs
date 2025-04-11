@@ -16,6 +16,27 @@ using Jegymester.Services;
 
 //banner - comment it out before migrations and database updates
 //UtilitiesClass.PrintBanner();
+
+/*-------------------------ADATBÁZIS SETUP--------------------------------------*/
+//1)
+//HA VAN SQLExpress telepítve: appsettings.jsonben az SQLExpresses connectiont használd
+//HA NINCS SQLExpress telepítve: appsettings.jsonben az SQLExpresses NÉLKÜLI connectiont használd
+//
+//(de a legjobb lenne ha mindenki felrakná az SQLExpresst hogy ne kelljen folyton átkommentelgetni...
+//
+//2)
+//Open Microsoft SQL Server Managemet Studio -> connect
+//
+//3) 
+//Visual Studio:
+//View -> Other windows -> Package Manager console
+//Default project: Jegymester.DataContext (a Package Manager console tetején)
+//Update-Database -> enter
+//
+//Kész, mostmár van adatbázisod amit jelenleg manuálisan tölthetsz meg adatokkal
+/*-------------------------ADATBÁZIS SETUP VÉGE---------------------------------*/
+
+//scalar, itt könnyen átláthatóak a végpontok
 //https://localhost:7137/scalar/v1 <--- Ctrl + Click to open to easily test API stuff
 
 
