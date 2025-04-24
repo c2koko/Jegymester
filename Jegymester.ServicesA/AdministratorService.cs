@@ -5,6 +5,7 @@ using Jegymester.DataContext.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,27 +72,55 @@ namespace Jegymester.Services
                 throw new KeyNotFoundException("Movie not found!");
             }
 
+            //specifikacio szerint akkor nem lehet torolni ha eppen megy a film vetitese
+
             /*
-            var screeningCount = await _context.Movies
-                .SelectMany(s => s.Screenings)
-                .CountAsync(m => m.MovieId == movieId);
-            */
-            //specifikacio szerint akkor nem lehet torolni ha eppen megy a vetites, ezen kesobb dolgozni meg
-            /*
-            if(screeningCount != 0)
+             * az ötlet: 
+             * 0) kiszedjük a movieból a hosszát és konvertáljuk idővé
+             * 1) végigmegyünk minden screeningen
+             * 2) megnézzük hogy az keresett film van e benne és ha igen, kiszámoljuk a vetítés végét
+             * 3) Megnézzük hogy a datetime.now beleesit e a vetítés kezdete és a vetítés kezdete+ konvertált idő közé (if > && <)
+             *      - ha igen, akkor throw OngoingMovieException: (éppen fut a film)
+             *      - ha nem, akkor semmi nem történik
+             * 4) ha nem, akkor semmi nem történik
+             */
+
+
+            // 0)
+            int length = movie.MovieDuration;
+            TimeSpan converted_length = TimeSpan.FromMinutes(length);
+
+
+            // 1)
+            foreach (Screening s in _context.Screenings) 
             {
-                throw new Exception("Movie cannot be deleted because there screenings with it!");
+                // 2)
+                if (s.Movie.MovieName == movie.MovieName) 
+                {
+                    DateTime ScreeningEnd = s.ScreeningStartTime + converted_length;
+
+                    //3)
+                    if (DateTime.Now > s.ScreeningStartTime && DateTime.Now < ScreeningEnd) 
+                    {
+                        //4)
+                        throw OngoingMovieException("Movie cannot be deleted because there is an ongoing screening of it");
+                    }
+                }
             }
-            */
 
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
             return true;
         }
 
+        private Exception OngoingMovieException(string v)
+        {
+            throw new NotImplementedException();
+        }
+
 
         //------------------------------------Screening Tasks------------------------------------//
-        
+
         public async Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto)
         {
             var screening = _mapper.Map<Screening>(screeningCreateDto);
