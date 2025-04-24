@@ -13,6 +13,9 @@ namespace Jegymester.DataContext.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Screening> Screenings { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        // chair stuff
+        public DbSet<Chair> Chairs { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -77,6 +80,29 @@ namespace Jegymester.DataContext.Data
                 .HasOne(t => t.Screening)
                 .WithMany(s => s.Tickets)
                 .HasForeignKey(t => t.ScreeningId);
+
+            //----------------------------------------- chair stuff---------------------------------------
+
+            // Screening |N <=> 1| Room
+
+            modelBuilder.Entity<Screening>()
+                .HasOne(scr => scr.Room)
+                .WithMany(room => room.screening)
+                .HasForeignKey(scr => scr.RoomId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            // Room |1 <=> N| Chair
+
+            modelBuilder.Entity<Chair>()
+                .HasOne(chr => chr.Room)
+                .WithMany(r => r.chairs)
+                .HasForeignKey(chr => chr.RoomId);
+
+            // Chair
+
+            modelBuilder.Entity<Chair>()
+                .HasKey(chair => chair.Id);
 
 
             /*

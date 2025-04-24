@@ -8,7 +8,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Jegymester.Services;
@@ -56,9 +55,10 @@ builder.Services.AddScoped<IScreeningService, ScreeningService>();
 builder.Services.AddScoped<ICashierService, CashierService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IChairService, ChairService>();
 
 
-//enélkül valamiért nem mûködnek rendesen az hívások, valami Json.Serialization cycle miatt
+//enélkül nem mûködnek rendesen az hívások, valami Json.Serialization cycle miatt
 builder.Services.AddMvc()
                .AddJsonOptions(opt =>
                {

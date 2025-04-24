@@ -44,6 +44,9 @@ namespace Jegymester.Services
                 .ForMember(d => d.UserId, o => o.MapFrom(s => s.UserId))
                 .ForMember(d => d.ScreeningId, o => o.MapFrom(s => s.ScreeningId));
             CreateMap<TicketVerifyDto, Ticket>();
+
+            //Chair mapping
+            CreateMap<Chair, ChairDto>();
         }
     }
 }
