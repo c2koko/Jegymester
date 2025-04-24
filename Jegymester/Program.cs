@@ -58,7 +58,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IChairService, ChairService>();
 
 
-//enélkül nem mûködnek rendesen az hívások, valami Json.Serialization cycle miatt
+//enélkül nem mûködnek rendesen a hívások scalarban, valami Json.Serialization cycle miatt
 builder.Services.AddMvc()
                .AddJsonOptions(opt =>
                {
