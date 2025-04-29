@@ -12,6 +12,10 @@
 
         //---------------több ticket/screening
         public List<Ticket> Tickets { get; set; }
-        
+
+        //---------------room stuff
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
+
     }
 }

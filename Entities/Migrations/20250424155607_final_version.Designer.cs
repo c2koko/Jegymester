@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jegymester.DataContext.Migrations
 {
     [DbContext(typeof(JegymesterDbContext))]
-    [Migration("20250331101756_ModelNoDeleteCascades")]
-    partial class ModelNoDeleteCascades
+    [Migration("20250424155607_final_version")]
+    partial class final_version
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,27 @@ namespace Jegymester.DataContext.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Jegymester.DataContext.Entities.Chair", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsReserved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Chairs");
+                });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Movie", b =>
                 {
@@ -71,6 +92,19 @@ namespace Jegymester.DataContext.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("Jegymester.DataContext.Entities.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms");
+                });
+
             modelBuilder.Entity("Jegymester.DataContext.Entities.Screening", b =>
                 {
                     b.Property<int>("Id")
@@ -80,6 +114,9 @@ namespace Jegymester.DataContext.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<string>("ScreeningLocation")
@@ -95,6 +132,8 @@ namespace Jegymester.DataContext.Migrations
                         .IsUnique();
 
                     b.HasIndex("MovieId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Screenings");
                 });
@@ -154,6 +193,10 @@ namespace Jegymester.DataContext.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -172,6 +215,17 @@ namespace Jegymester.DataContext.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Jegymester.DataContext.Entities.Chair", b =>
+                {
+                    b.HasOne("Jegymester.DataContext.Entities.Room", "Room")
+                        .WithMany("chairs")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("Jegymester.DataContext.Entities.Screening", b =>
                 {
                     b.HasOne("Jegymester.DataContext.Entities.Movie", "Movie")
@@ -180,7 +234,15 @@ namespace Jegymester.DataContext.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Jegymester.DataContext.Entities.Room", "Room")
+                        .WithMany("screening")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Movie");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Ticket", b =>
@@ -222,6 +284,13 @@ namespace Jegymester.DataContext.Migrations
             modelBuilder.Entity("Jegymester.DataContext.Entities.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Jegymester.DataContext.Entities.Room", b =>
+                {
+                    b.Navigation("chairs");
+
+                    b.Navigation("screening");
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Screening", b =>
