@@ -12,6 +12,7 @@ namespace Jegymester.DataContext.Dtos
     {
         public int Id { get; set; }
         public string MovieName { get; set; }
+        public string MovieImg { get; set; }
         public string MovieDescription { get; set; }
         public int MovieDuration { get; set; }
         public List<Screening> Screenings { get; set; }
@@ -20,6 +21,7 @@ namespace Jegymester.DataContext.Dtos
     public class MovieCreateDto
     {
         public string MovieName { get; set; }
+        public string MovieImg { get; set; }
         public string MovieDescription { get; set; }
         public int MovieDuration { get; set; }
     }
@@ -27,6 +29,7 @@ namespace Jegymester.DataContext.Dtos
     public class MovieUpdateDto
     {
         public string MovieName { get; set; }
+        public string MovieImg { get; set; }
         public string MovieDescription { get; set; }
         public int MovieDuration { get; set; }
     }

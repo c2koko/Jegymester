@@ -6,6 +6,7 @@ namespace Jegymester.DataContext.Entities
     public class Movie
     {
         public int Id {  get; set; }
+        public string? MovieImg { get; set; }
         public required string MovieName {  get; set; }
         public string? MovieDescription { get; set; }
         public int MovieDuration { get; set; }
