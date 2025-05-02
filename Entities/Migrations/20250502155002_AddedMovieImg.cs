@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Jegymester.DataContext.Migrations
 {
     /// <inheritdoc />
-    public partial class final_version : Migration
+    public partial class AddedMovieImg : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,7 +60,6 @@ namespace Jegymester.DataContext.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -135,7 +134,7 @@ namespace Jegymester.DataContext.Migrations
                     DateOfPurchase = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     TicketVerified = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
                     ScreeningId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -151,8 +150,7 @@ namespace Jegymester.DataContext.Migrations
                         name: "FK_Tickets_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
