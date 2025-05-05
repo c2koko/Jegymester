@@ -11,6 +11,7 @@ namespace Jegymester.Services
     {
         Task<TicketDto> CreateTicketAsync(TicketCreateDto ticketDto, int? userId);
         Task<bool> DeleteTicketAsync(int id);
+        Task<TicketDto> GetTicketByIdAsync(int id);
     }
     public class TicketService : ITicketService
     {
@@ -64,6 +65,16 @@ namespace Jegymester.Services
             _context.Tickets.Remove(ticket);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<TicketDto> GetTicketByIdAsync(int id)
+        {
+            var ticket = await _context.Tickets.FindAsync(id);
+            if (ticket == null)
+            {
+                throw new KeyNotFoundException("Ticket is not found!"); 
+            }
+            return _mapper.Map<TicketDto>(ticket);
         }
 
         private Exception DeadlineException(string v)
