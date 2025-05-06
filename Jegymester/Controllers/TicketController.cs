@@ -54,6 +54,13 @@ namespace Jegymester.Controllers
             return NotFound();
         }
 
+        [HttpGet("GetTicketById")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTicketById(int id)
+        {
+            var ticket = await _ticketService.GetTicketByIdAsync(id);
+            return Ok(ticket);
+        }
 
         [HttpGet("GetTicketsByUserId")]
         [AllowAnonymous]

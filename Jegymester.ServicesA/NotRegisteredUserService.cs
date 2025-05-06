@@ -39,13 +39,8 @@ namespace Jegymester.Services
 
         public async Task<NotRegisteredUserDto> CreateNotRegisteredUserAsync(NotRegisteredUserDto userDto, string email, string phone) 
         {
-
-
-            //userid a ticketnek
-            int id = 0;
             bool AlreadyExists = false;
 
-            //* leellenőrizni hogy nincs e már ezzel a kombinációval user, és ha nincs akkor lefut a kód, ha van akkor semmi nem történik *//
             foreach (User u in _context.Users)
             {
                 if (u.Name == "placeholder" && u.Email == email && u.Phone == phone) 
@@ -88,9 +83,5 @@ namespace Jegymester.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<TicketDto>(ticket);
         }
-
-
-
-
     }
 }

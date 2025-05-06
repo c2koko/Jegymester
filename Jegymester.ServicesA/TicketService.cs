@@ -13,6 +13,7 @@ namespace Jegymester.Services
     {
         Task<TicketDto> CreateTicketAsync(TicketCreateDto ticketDto, int? userId);
         Task<bool> DeleteTicketAsync(int id);
+        Task<TicketDto> GetTicketByIdAsync(int id);
         Task<List<Ticket>> GetTicketByUserIdAsync(int uId);
     }
     public class TicketService : ITicketService
@@ -69,24 +70,38 @@ namespace Jegymester.Services
             return true;
         }
 
-        private Exception DeadlineException(string v)
+        public async Task<TicketDto> GetTicketByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var ticket = await _context.Tickets.FindAsync(id);
+            if (ticket == null)
+            {
+                throw new KeyNotFoundException("Ticket is not found!"); 
+            }
+            return _mapper.Map<TicketDto>(ticket);
         }
 
         public async Task<List<Ticket>> GetTicketByUserIdAsync(int uId)
         {
-            //nem tudom miért, de ez nagyon nem azt adja vissza amit kéne
+            //nem tudom miért, de az includeos verzio nagyon nem azt adja vissza amit kéne
 
-            var lista = await _context.Tickets
+            //var lista = await _context.Tickets
             //.Where(t => t.UserId == uId)
-            .Include(ticket => ticket.Screening)
+            //.Include(ticket => ticket.Screening)
             //   .ThenInclude(s => s.Movie)
             //.Include(t => t.User)
+            //.ToListAsync();
+
+            var lista = await _context.Tickets
+            .Where(t => t.UserId == uId)
             .ToListAsync();
 
-            
+
             return lista;
+        }
+
+        private Exception DeadlineException(string v)
+        {
+            throw new NotImplementedException();
         }
     }    
 }
