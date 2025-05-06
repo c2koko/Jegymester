@@ -3,7 +3,9 @@ using AutoMapper;
 using Jegymester.DataContext.Data;
 using Jegymester.DataContext.Entities;
 using Jegymester.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Net.Sockets;
 
 namespace Jegymester.Services
 {
@@ -11,6 +13,7 @@ namespace Jegymester.Services
     {
         Task<TicketDto> CreateTicketAsync(TicketCreateDto ticketDto, int? userId);
         Task<bool> DeleteTicketAsync(int id);
+        Task<List<Ticket>> GetTicketByUserIdAsync(int uId);
     }
     public class TicketService : ITicketService
     {
@@ -70,6 +73,21 @@ namespace Jegymester.Services
         {
             throw new NotImplementedException();
         }
-    }
+
+        public async Task<List<Ticket>> GetTicketByUserIdAsync(int uId)
+        {
+            //nem tudom miért, de ez nagyon nem azt adja vissza amit kéne
+
+            var lista = await _context.Tickets
+            //.Where(t => t.UserId == uId)
+            .Include(ticket => ticket.Screening)
+            //   .ThenInclude(s => s.Movie)
+            //.Include(t => t.User)
+            .ToListAsync();
+
+            
+            return lista;
+        }
+    }    
 }
 /* ============================================= UNDER DEV ========================================= */

@@ -57,6 +57,7 @@ builder.Services.AddScoped<ICashierService, CashierService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IChairService, ChairService>();
+builder.Services.AddScoped<INotRegisteredUserervice, NotRegisteredUserService>();
 
 
 //enélkül nem mûködnek rendesen a hívások scalarban, valami Json.Serialization cycle miatt
