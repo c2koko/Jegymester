@@ -31,6 +31,18 @@ namespace Jegymester.DataContext.Dtos
         public int RoleId { get; set; }
     }
 
+    public class NotRegisteredUserDto 
+    {
+        public string Username = "NotRegisteredUser";
+        public string Password = "12345";
+        public string Name = "placeholder";
+
+        public string Email { get; set; }
+        public string Phone { get; set; }
+
+        public int RoleId = 4;
+    }
+
     public class UserLoginDto 
     {
         [Required]

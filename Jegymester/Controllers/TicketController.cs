@@ -32,7 +32,7 @@ namespace Jegymester.Controllers
             return CreatedAtAction(nameof(CreateTicket), new { id = ticket.Id }, ticket);
         }
 
-        [HttpPost("CreateTicket")]
+        [HttpPost("CreateTicketRegisteredUser")]
         [Authorize(Roles = "RegisteredUser")]
         public async Task<IActionResult> CreateTicket([FromBody] TicketCreateDto ticketDto)
         {
@@ -52,6 +52,22 @@ namespace Jegymester.Controllers
                 return NoContent();
             }
             return NotFound();
+        }
+
+        [HttpGet("GetTicketById")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTicketById(int id)
+        {
+            var ticket = await _ticketService.GetTicketByIdAsync(id);
+            return Ok(ticket);
+        }
+
+        [HttpGet("GetTicketsByUserId")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTicketsByUserId(int id)
+        {
+            var tickets = await _ticketService.GetTicketByUserIdAsync(id);
+            return Ok(tickets);
         }
     }
 }

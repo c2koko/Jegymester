@@ -21,6 +21,8 @@ namespace Jegymester.Services
             //User mapping
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<UserRegisterDto, User>();
+            CreateMap<NotRegisteredUserDto, User>();
+            CreateMap<User, NotRegisteredUserDto>();
             CreateMap<UserUpdateDto, User>();
 
 

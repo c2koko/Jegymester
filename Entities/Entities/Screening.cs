@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public required DateTime ScreeningStartTime { get; set; }
-        public string ScreeningLocation { get; set; }
+        //public string ScreeningLocation { get; set; }
 
         //---------------1 movie/screening
         public required int MovieId { get; set; } //FK - ez kapcsolja a moviet a screeninghez

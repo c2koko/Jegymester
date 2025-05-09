@@ -7,9 +7,14 @@ namespace Jegymester.DataContext.Dtos
     public class ScreeningDto
     {
         public int Id { get; set; }
-        public string ScreeningLocation { get; set; }
+        //public string ScreeningLocation { get; set; }
         public DateTime ScreeningStartTime { get; set; }
-        public MovieDto Movie { get; set; }
+
+        public required int MovieId { get; set; }
+        public Movie Movie { get; set; }
+
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
 
         //public IEnumerable<TicketDto> Tickets { get; set; }
     }
@@ -17,9 +22,10 @@ namespace Jegymester.DataContext.Dtos
     public class ScreeningCreateDto
     {
         //id auto generated
-        public string ScreeningLocation { get; set; }
+        //public string ScreeningLocation { get; set; }
         public DateTime ScreeningStartTime { get; set; }
         public int MovieId { get; set; }
+        public int RoomId { get; set; }
 
         //public IEnumerable<TicketDto> Tickets { get; set; }
     }
@@ -27,9 +33,10 @@ namespace Jegymester.DataContext.Dtos
     
     public class ScreeningUpdateDto
     {
-        public string ScreeningLocation { get; set; }
+        //public string ScreeningLocation { get; set; }
         public DateTime ScreeningStartTime { get; set; }
         public int MovieId { get; set; }
+        public int RoomId { get; set; }
         //public IEnumerable<TicketDto> Tickets { get; set; }
     }
 
