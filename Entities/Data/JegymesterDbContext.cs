@@ -104,6 +104,18 @@ namespace Jegymester.DataContext.Data
             modelBuilder.Entity<Chair>()
                 .HasKey(chair => chair.Id);
 
+            modelBuilder.Entity<Chair>()
+                .HasOne(c => c.Ticket)
+                .WithMany(t => t.Chairs)
+                .HasForeignKey(c => c.TicketId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ticket>()
+                .HasMany(t=>t.Chairs)
+                .WithOne(c=>c.Ticket)
+                .HasForeignKey(c=>c.TicketId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             /*
         //--- User tábla relációi ---

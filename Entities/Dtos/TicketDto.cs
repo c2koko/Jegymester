@@ -14,6 +14,7 @@ namespace Jegymester.Dtos
         public User User { get; set; }
         public int ScreeningId { get; set; } 
         public Screening Screening { get; set; }
+        public List<Chair> Chairs { get; set; }
     }
 
     public class TicketCreateDto

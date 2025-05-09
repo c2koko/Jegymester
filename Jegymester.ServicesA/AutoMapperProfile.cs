@@ -21,8 +21,8 @@ namespace Jegymester.Services
             //User mapping
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<UserRegisterDto, User>();
-            CreateMap<NotRegisteredUserDto, User>();
-            CreateMap<User, NotRegisteredUserDto>();
+            //CreateMap<NotRegisteredUserDto, User>();
+            //CreateMap<User, NotRegisteredUserDto>();
             CreateMap<UserUpdateDto, User>();
 
 
@@ -41,13 +41,16 @@ namespace Jegymester.Services
 
 
             //Ticket Mapping
-            CreateMap<Ticket, TicketDto>().ReverseMap();
+            CreateMap<Ticket, TicketDto>().ReverseMap()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User))
+                .ForMember(dest => dest.Screening, opt => opt.MapFrom(src => src.Screening))
+                .ForMember(dest => dest.Chairs, opt => opt.MapFrom(src => src.Chairs));
             CreateMap<TicketCreateDto, Ticket>()
                 .ForMember(d => d.ScreeningId, o => o.MapFrom(s => s.ScreeningId));
             CreateMap<TicketVerifyDto, Ticket>();
 
             //Chair mapping
-            CreateMap<Chair, ChairDto>();
+            CreateMap<Chair, ChairDto>().ReverseMap();
         }
     }
 }

@@ -13,5 +13,6 @@ namespace Jegymester.DataContext.Dtos
         public bool IsReserved { get; set; }
         //ezek a kódok (lefele) nem lesznek használva, de jobb he bent vannak
         public int RoomId { get; set; }
+
     }
 }
