@@ -8,7 +8,7 @@ namespace Jegymester.DataContext.Entities
         public Screening screening { get; set; }
         public bool IsReserved { get; set; } // false - nem foglalt, true - foglalt
 
-        public int TicketId {  get; set; }
+        public int? TicketId {  get; set; }
 
         public Ticket Ticket { get; set; }
     }
