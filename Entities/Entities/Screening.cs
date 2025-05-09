@@ -17,5 +17,9 @@
         public int RoomId { get; set; }
         public Room Room { get; set; }
 
+        //---------------chair stuff
+        public List<Chair> Chairs { get; set; } // a screeninghez tartozó székek listája
+        
+
     }
 }

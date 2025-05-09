@@ -15,7 +15,7 @@ namespace Jegymester.Services
     {
         Task<IEnumerable<ChairDto>> GetAllChair(); // visszaadja a székeket kihangsúlyozva foglalt-e
         Task<bool> UpdateReservation(int id); // jegyvásárlás és film lejátszás után átírja a bool-t
-        Task<IEnumerable<ChairDto>> GetAvailableChairsForRoom(int room);// front-end interface - szabad székek kilistázása miatt kelleni fog, fontos
+        Task<IEnumerable<ChairDto>> GetAvailableChairsForRoom(int screening);// front-end interface - szabad székek kilistázása miatt kelleni fog, fontos
     }
     public class ChairService : IChairService
     {
@@ -42,9 +42,9 @@ namespace Jegymester.Services
             */
         }
 
-        public async Task<IEnumerable<ChairDto>> GetAvailableChairsForRoom(int room)
+        public async Task<IEnumerable<ChairDto>> GetAvailableChairsForRoom(int screening)
         {
-            return (IEnumerable<ChairDto>)_mapper.Map<List<Chair>, List<ChairDto>>(await _dbContext.Chairs.Where(c => c.RoomId == room && !c.IsReserved).ToListAsync());
+            return (IEnumerable<ChairDto>)_mapper.Map<List<Chair>, List<ChairDto>>(await _dbContext.Chairs.Where(c => c.ScreeningId == screening && !c.IsReserved).ToListAsync());
         }
 
         public async Task<bool> UpdateReservation(int id)

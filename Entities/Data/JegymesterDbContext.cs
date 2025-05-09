@@ -95,9 +95,9 @@ namespace Jegymester.DataContext.Data
             // Room |1 <=> N| Chair
 
             modelBuilder.Entity<Chair>()
-                .HasOne(chr => chr.Room)
-                .WithMany(r => r.chairs)
-                .HasForeignKey(chr => chr.RoomId);
+                .HasOne(chr => chr.screening)
+                .WithMany(r => r.Chairs)
+                .HasForeignKey(chr => chr.ScreeningId);
 
             // Chair
 

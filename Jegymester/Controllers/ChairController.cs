@@ -12,7 +12,7 @@ using Jegymester.Services;
 namespace Jegymester
 {
     [ApiController]
-    [Route("chairs")]
+    [Route("api/chairs")]
     public class ChairController : ControllerBase
     {
         JegymesterDbContext _dbContext;
@@ -51,10 +51,10 @@ namespace Jegymester
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpGet("available/{roomId}")]
-        public async Task<ActionResult<IEnumerable<Chair>>> GetAvailableChairsForRoom(int roomId)
+        [HttpGet("GetAvailableChairsForRoom/{roomId}")]
+        public async Task<ActionResult<IEnumerable<Chair>>> GetAvailableChairsForRoom(int screening)
         {
-            var availableChairs = await _chairService.GetAvailableChairsForRoom(roomId);
+            var availableChairs = await _chairService.GetAvailableChairsForRoom(screening);
             return Ok(availableChairs);
         }
     }
