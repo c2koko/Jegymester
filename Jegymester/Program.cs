@@ -60,6 +60,18 @@ builder.Services.AddScoped<IChairService, ChairService>();
 builder.Services.AddScoped<INotRegisteredUserervice, NotRegisteredUserService>();
 
 
+// ez kell, hogy a szerver engedéjezzen cross-origin kéréseket
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 //enélkül nem mûködnek rendesen a hívások scalarban, valami Json.Serialization cycle miatt
 builder.Services.AddMvc()
                .AddJsonOptions(opt =>
@@ -80,6 +92,10 @@ if (app.Environment.IsDevelopment())
 
     //https://localhost:7137/scalar/v1 <--- open to easily test API stuff
 }
+
+
+// kell a front-end mûködése érdekében
+app.UseCors();
 
 app.UseHttpsRedirection();
 
