@@ -39,6 +39,33 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // Add services to the container.
 
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetpincerApp API", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please insert JWT token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+    {
+        new OpenApiSecurityScheme {
+            Reference = new OpenApiReference {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        new string[] { }
+    }});
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -68,6 +95,18 @@ builder.Services.AddScoped<IChairService, ChairService>();
 builder.Services.AddScoped<INotRegisteredUserervice, NotRegisteredUserService>();
 
 
+// ez kell, hogy a szerver engedéjezzen cross-origin kéréseket
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 //enélkül nem mûködnek rendesen a hívások scalarban, valami Json.Serialization cycle miatt
 builder.Services.AddMvc()
                .AddJsonOptions(opt =>
@@ -86,8 +125,19 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
     app.MapOpenApi();
 
+    app.UseSwagger();
+    app.UseSwaggerUI( options => // UseSwaggerUI is called only in Development.
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
+
     //https://localhost:7137/scalar/v1 <--- open to easily test API stuff
 }
+
+
+// kell a front-end mûködése érdekében
+app.UseCors();
 
 app.UseHttpsRedirection();
 
