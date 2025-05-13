@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Jegymester.Services;
+using System.Text.Json.Serialization;
 
 
 //banner - comment it out before migrations and database updates
@@ -44,6 +45,13 @@ builder.Services.AddOpenApi();
 
 //connecting to the db
 builder.Services.AddDbContext<JegymesterDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Ciklikus referencia kezelésének megtiltása
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 
 //Service

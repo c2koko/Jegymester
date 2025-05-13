@@ -44,7 +44,11 @@ namespace Jegymester.Services
 
         public async Task<IEnumerable<ChairDto>> GetAvailableChairsForRoom(int screening)
         {
-            return (IEnumerable<ChairDto>)_mapper.Map<List<Chair>, List<ChairDto>>(await _dbContext.Chairs.Where(c => c.ScreeningId == screening && !c.IsReserved).ToListAsync());
+            var chairs = await _dbContext.Chairs
+            .Where(c => c.ScreeningId == screening && !c.IsReserved)
+            .ToListAsync();
+
+            return _mapper.Map<List<ChairDto>>(chairs); // Nincs szükség explicit cast-ra
         }
 
         public async Task<bool> UpdateReservation(int id)

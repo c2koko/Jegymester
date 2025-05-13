@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Jegymester.DataContext.Entities;
-using Microsoft.EntityFrameworkCore;
-using Jegymester.DataContext.Data;
+﻿using Jegymester.DataContext.Data;
 using Jegymester.DataContext.Dtos;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Jegymester.DataContext.Entities;
 using Jegymester.Services;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Jegymester
@@ -51,8 +47,8 @@ namespace Jegymester
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpGet("GetAvailableChairsForRoom/{roomId}")]
-        public async Task<ActionResult<IEnumerable<Chair>>> GetAvailableChairsForRoom(int screening)
+        [HttpGet("GetAvailableChairsForRoom/{screening}")]
+        public async Task<IActionResult> GetAvailableChairsForRoom(int screening)
         {
             var availableChairs = await _chairService.GetAvailableChairsForRoom(screening);
             return Ok(availableChairs);
