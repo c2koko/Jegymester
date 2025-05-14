@@ -47,10 +47,10 @@ namespace Jegymester.Controllers
         public async Task<IActionResult> DeleteTicket(int id)
         {
             var result = await _ticketService.DeleteTicketAsync(id);
-            if (result)
+            /*if (result)
             {
                 return Ok(result);
-            }
+            }*/
             return Ok(result);
         }
 

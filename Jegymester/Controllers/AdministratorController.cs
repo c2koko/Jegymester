@@ -82,10 +82,10 @@ namespace Jegymester.Controllers
         public async Task<IActionResult> DeleteScreening(int id)
         {
             var result = await _administratorService.DeleteScreeningAsync(id);
-            if (result)
+            /*if (result)
             {
                 Ok(result);
-            }
+            }*/
             return Ok(result);
         }
 
