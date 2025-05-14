@@ -44,10 +44,10 @@ namespace Jegymester.Controllers
         public async Task<IActionResult> DeleteMovie(int id)
         {
             var result = await _administratorService.DeleteMovieAsync(id);
-            if (result)
+            /*if (result)
             {
                 return NoContent();
-            }
+            }*/
             return NotFound();
         }
 

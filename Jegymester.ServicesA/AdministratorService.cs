@@ -17,13 +17,13 @@ namespace Jegymester.Services
         //Movie Tasks
         Task<MovieDto> CreateMovieAsync(MovieCreateDto movieDto);
         Task<MovieDto> UpdateMovieAsync(int id, MovieUpdateDto moviedto);
-        Task<bool> DeleteMovieAsync(int movieId);
+        Task<string> DeleteMovieAsync(int movieId);
 
 
         //Screening Tasks
         Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto);
         Task<ScreeningDto> UpdateScreeningAsync(int screeningId, ScreeningUpdateDto screeningUpdateDto);
-        Task<string> DeleteScreeningAsync(int movieId);
+        Task<bool> DeleteScreeningAsync(int movieId);
 
     }
 
