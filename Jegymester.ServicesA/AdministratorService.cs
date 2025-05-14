@@ -23,7 +23,7 @@ namespace Jegymester.Services
         //Screening Tasks
         Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto);
         Task<ScreeningDto> UpdateScreeningAsync(int screeningId, ScreeningUpdateDto screeningUpdateDto);
-        Task<bool> DeleteScreeningAsync(int movieId);
+        Task<string> DeleteScreeningAsync(int movieId);
 
     }
 
@@ -64,7 +64,7 @@ namespace Jegymester.Services
             return _mapper.Map<MovieDto>(movie);
         }
 
-        public async Task<bool> DeleteMovieAsync(int movieId)
+        public async Task<string> DeleteMovieAsync(int movieId)
         {
             var movie = await _context.Movies.FindAsync(movieId);
             if (movie == null)
@@ -103,28 +103,24 @@ namespace Jegymester.Services
                     if (DateTime.Now > s.ScreeningStartTime && DateTime.Now < ScreeningEnd) 
                     {
                         //4)
-                        throw new OngoingMovieException("Movie cannot be deleted because there is an ongoing screening of it");
+                        return "Movie cannot be deleted because there is an ongoing screening of it";
                     }
                 }
             }
 
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
-            return true;
+            return "Movie successfully deleted";
         }
 
-        /*private Exception OngoingMovieException(string v)
-        {
-            throw new NotImplementedException();
-        }*/
-
+        /*
         public class OngoingMovieException : Exception
         {
             public OngoingMovieException(string message)
                 : base(message)
             {
             }
-        }
+        }*/
 
 
         //------------------------------------Screening Tasks------------------------------------//

@@ -12,7 +12,7 @@ namespace Jegymester.Services
     public interface ITicketService
     {
         Task<TicketDto> CreateTicketAsync(TicketCreateDto ticketDto, int? userId);
-        Task<bool> DeleteTicketAsync(int id);
+        Task<string> DeleteTicketAsync(int id);
         Task<TicketDto> GetTicketByIdAsync(int id);
         Task<List<Ticket>> GetTicketByUserIdAsync(int uId);
     }
@@ -39,7 +39,7 @@ namespace Jegymester.Services
         }
 
         //delete ticket
-        public async Task<bool> DeleteTicketAsync(int id)
+        public async Task<string> DeleteTicketAsync(int id)
         {
             var ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)
@@ -62,12 +62,13 @@ namespace Jegymester.Services
             if (DateTime.Now > deadline) 
             {
                 //2)
-                throw new DeadLineException("Ticket cannot be deleted because there is less than 4 hours until the screening");
+                //throw new DeadLineException("Ticket cannot be deleted because there is less than 4 hours until the screening");
+                return "Ticket cannot be deleted because there is less than 4 hours until the screening";
             }
 
             _context.Tickets.Remove(ticket);
             await _context.SaveChangesAsync();
-            return true;
+            return "Ticket successfully deleted";
         }
 
         public async Task<TicketDto> GetTicketByIdAsync(int id)
@@ -99,6 +100,7 @@ namespace Jegymester.Services
             return lista;
         }
 
+        
         public class DeadLineException : Exception
         {
             public DeadLineException(string message)
@@ -106,6 +108,7 @@ namespace Jegymester.Services
             {
             }
         }
+        
     }    
 }
 /* ============================================= UNDER DEV ========================================= */

@@ -84,9 +84,9 @@ namespace Jegymester.Controllers
             var result = await _administratorService.DeleteScreeningAsync(id);
             if (result)
             {
-                return NoContent();
+                Ok(result);
             }
-            return NotFound();
+            return Ok(result);
         }
 
 

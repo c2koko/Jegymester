@@ -49,9 +49,9 @@ namespace Jegymester.Controllers
             var result = await _ticketService.DeleteTicketAsync(id);
             if (result)
             {
-                return NoContent();
+                return Ok(result);
             }
-            return NotFound();
+            return Ok(result);
         }
 
         [HttpGet("GetTicketById")]
