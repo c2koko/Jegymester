@@ -62,7 +62,7 @@ namespace Jegymester.Services
             if (DateTime.Now > deadline) 
             {
                 //2)
-                throw DeadlineException("Ticket cannot be deleted because there is less than 4 hours until the screening");
+                throw new DeadLineException("Ticket cannot be deleted because there is less than 4 hours until the screening");
             }
 
             _context.Tickets.Remove(ticket);
@@ -99,9 +99,12 @@ namespace Jegymester.Services
             return lista;
         }
 
-        private Exception DeadlineException(string v)
+        public class DeadLineException : Exception
         {
-            throw new NotImplementedException();
+            public DeadLineException(string message)
+                : base(message)
+            {
+            }
         }
     }    
 }

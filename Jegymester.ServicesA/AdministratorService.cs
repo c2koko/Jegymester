@@ -103,7 +103,7 @@ namespace Jegymester.Services
                     if (DateTime.Now > s.ScreeningStartTime && DateTime.Now < ScreeningEnd) 
                     {
                         //4)
-                        throw OngoingMovieException("Movie cannot be deleted because there is an ongoing screening of it");
+                        throw new OngoingMovieException("Movie cannot be deleted because there is an ongoing screening of it");
                     }
                 }
             }
@@ -113,9 +113,17 @@ namespace Jegymester.Services
             return true;
         }
 
-        private Exception OngoingMovieException(string v)
+        /*private Exception OngoingMovieException(string v)
         {
             throw new NotImplementedException();
+        }*/
+
+        public class OngoingMovieException : Exception
+        {
+            public OngoingMovieException(string message)
+                : base(message)
+            {
+            }
         }
 
 
