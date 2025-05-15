@@ -66,7 +66,7 @@ namespace Jegymester.Services
 
         public async Task<string> DeleteMovieAsync(int movieId)
         {
-            var movie = await _context.Movies.FindAsync(movieId);
+            var movie = await _context.Movies.Include(m => m.Screenings).FirstOrDefaultAsync(m => m.Id == movieId);
             if (movie == null)
             {
                 throw new KeyNotFoundException("Movie not found!");
@@ -92,7 +92,9 @@ namespace Jegymester.Services
 
 
             // 1)
-            foreach (Screening s in _context.Screenings) 
+            var screenings = movie.Screenings;
+
+            foreach (Screening s in screenings) 
             {
                 // 2)
                 if (s.Movie.MovieName == movie.MovieName) 
