@@ -31,7 +31,7 @@ namespace Jegymester.Services
         public async Task<TicketDto> CreateTicketAsync(TicketCreateDto ticketDto, int? userId)
         {
             var ticket = _mapper.Map<Ticket>(ticketDto);
-            ticket.UserId = userId; // NULL ha a user nem regisztrált
+            //ticket.UserId = userId; // NULL ha a user nem regisztrált
 
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
