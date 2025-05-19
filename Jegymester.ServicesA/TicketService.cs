@@ -41,34 +41,30 @@ namespace Jegymester.Services
         //delete ticket
         public async Task<string> DeleteTicketAsync(int id)
         {
-            var ticket = await _context.Tickets.FindAsync(id);
-            if (ticket == null)
+            try
             {
-                throw new KeyNotFoundException("Ticket not found.");
+                // így már betölti a kapcsolódó Screening-et is
+                var ticket = await _context.Tickets
+                    .Include(t => t.Screening)
+                    .FirstOrDefaultAsync(t => t.Id == id);
+
+                if (ticket == null)
+                    throw new KeyNotFoundException("Ticket not found.");
+
+                // 4 órával a vetítés előtt nem törölhető
+                var deadline = ticket.Screening.ScreeningStartTime.AddHours(-4);
+                if (DateTime.Now > deadline)
+                    return "Ticket cannot be deleted because there is less than 4 hours until the screening";
+
+                _context.Tickets.Remove(ticket);
+                await _context.SaveChangesAsync();
+                return "Ticket successfully deleted";
             }
-
-            //specifikáció: 4 órával a vetítés előtt már nem törölhető a jegy, de addig igen
-            /*
-             * ötlet:
-             * 0) új változó: 4 órát levonunk a screeningstarttimeból
-             * 1) megnézzük hogy a datetime.now nagyobb e mint az új változó
-             * 2) ha igen, akkor exceptiont dobunk
-             */
-
-            // 0)
-            TimeSpan converted_time = TimeSpan.FromHours(4);
-            DateTime deadline = ticket.Screening.ScreeningStartTime - converted_time;
-            // 1)
-            if (DateTime.Now > deadline) 
+            catch (Exception e)
             {
-                //2)
-                //throw new DeadLineException("Ticket cannot be deleted because there is less than 4 hours until the screening");
-                return "Ticket cannot be deleted because there is less than 4 hours until the screening";
+                // itt lehet konkrétabban is kezelni a DeadLineException-t vagy KeyNotFound-t
+                throw;
             }
-
-            _context.Tickets.Remove(ticket);
-            await _context.SaveChangesAsync();
-            return "Ticket successfully deleted";
         }
 
         public async Task<TicketDto> GetTicketByIdAsync(int id)

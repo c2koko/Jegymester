@@ -44,6 +44,7 @@ namespace Jegymester.Controllers
         // Ticket torles
 
         [HttpDelete("DeleteTicket/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteTicket(int id)
         {
             var result = await _ticketService.DeleteTicketAsync(id);
