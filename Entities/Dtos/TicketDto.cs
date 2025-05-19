@@ -23,6 +23,7 @@ namespace Jegymester.Dtos
         public int Price { get; set; }
         public bool TicketVerified { get; set; } = false;
         public int ScreeningId { get; set; }
+        public int UserId { get; set; } //FK - ez kapcsolja a usert a tickethez
     }
 
     public class TicketVerifyDto 
