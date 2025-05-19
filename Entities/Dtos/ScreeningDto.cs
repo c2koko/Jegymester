@@ -9,12 +9,8 @@ namespace Jegymester.DataContext.Dtos
         public int Id { get; set; }
         //public string ScreeningLocation { get; set; }
         public DateTime ScreeningStartTime { get; set; }
-
         public required int MovieId { get; set; }
-        public Movie Movie { get; set; }
-
         public int RoomId { get; set; }
-        public Room Room { get; set; }
 
         //public IEnumerable<TicketDto> Tickets { get; set; }
     }

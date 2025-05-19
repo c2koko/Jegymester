@@ -50,7 +50,7 @@ namespace Jegymester.DataContext.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("Chairs");
+                    b.ToTable("Chairs", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Movie", b =>
@@ -79,7 +79,7 @@ namespace Jegymester.DataContext.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Role", b =>
@@ -99,7 +99,7 @@ namespace Jegymester.DataContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Room", b =>
@@ -116,7 +116,7 @@ namespace Jegymester.DataContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Screening", b =>
@@ -145,7 +145,7 @@ namespace Jegymester.DataContext.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Screenings");
+                    b.ToTable("Screenings", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Ticket", b =>
@@ -180,7 +180,7 @@ namespace Jegymester.DataContext.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.User", b =>
@@ -218,7 +218,7 @@ namespace Jegymester.DataContext.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Jegymester.DataContext.Entities.Chair", b =>
