@@ -14,9 +14,9 @@ namespace Jegymester.Services
         Task<IEnumerable<ScreeningDto>> GetAllScreeningsAsync();
         Task<IEnumerable<ScreeningDto>> GetScreeningsByMovieIdAsync(int movieId);
         Task<ScreeningDto> GetScreeningByIdAsync(int screeningId);
-        /*
         Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto); // pipa
          // pipa
+         /*
         Task<bool> DeleteScreeningAsync(int screeningId); // pipa
         Task<ScreeningDto> UpdateScreeningAsync(int screeningId, ScreeningUpdateDto screeningUpdateDto); // pipa
         Task<IEnumerable<TicketDto>> GetTicketsToScreeningAsync(int screeningId); // pipa
@@ -74,24 +74,41 @@ namespace Jegymester.Services
             return _mapper.Map<IEnumerable<ScreeningDto>>(screenings);
         }
 
-        /*
         public async Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto)
         {
-            var screening = new Screening
-            {
-                MovieId = screeningCreateDto.MovieId,
-                RoomId = screeningCreateDto.RoomId,
-                ScreeningstartTime = screeningCreateDto.ScreeningTime,
-                ScreeningTime = screeningCreateDto.ScreeningTime,
-                Tickets = new List<Ticket>(),
 
-            };
-            await dbContext.Screenings.AddAsync(screening);
-            await dbContext.SaveChangesAsync();
+            Screening screening = _mapper.Map<Screening>(screeningCreateDto);
+
+            _context.Screenings.Add(screening);
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine(screening.Id);
+
+
+            List<Chair> chairs = new List<Chair>();
+
+            for (int rows = 1; rows < 11; rows++)
+            {
+                for (int cols = 1; cols < 11; cols++)
+                {
+                    chairs.Add(new Chair()
+                    {
+                        ScreeningId = screening.Id,
+                        screening = screening,
+                        IsReserved = false,
+                    });
+                }
+            }
+
+
+            screening.Chairs = chairs;
+
+            _context.Chairs.AddRange(chairs);
+            await _context.SaveChangesAsync();
 
             return _mapper.Map<ScreeningDto>(screening);
         }
-
+        /*
         public async Task<bool> DeleteScreeningAsync(int screeningId)
         {
             var screening = await dbContext.Screenings.FindAsync(screeningId);
@@ -109,7 +126,7 @@ namespace Jegymester.Services
         
 
 
-
+        /*
         public async Task<IEnumerable<ScreeningDetailsDto>> GetScreeningsByDateAsync(DateTime date)
         {
             var screenings = await dbContext.Screenings

@@ -1,4 +1,5 @@
 ﻿/*============================================= UNDER DEV =========================================*/
+using Jegymester.DataContext.Dtos;
 using Jegymester.Dtos;
 using Jegymester.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -45,7 +46,6 @@ namespace Jegymester.Controllers
 
 
 
-        /*
         [HttpPost]
         public async Task<IActionResult> CreateScreening([FromBody] ScreeningCreateDto screeningDto)
         {
@@ -53,6 +53,8 @@ namespace Jegymester.Controllers
             return CreatedAtAction(nameof(GetScreeningById), new { id = screening.Id }, screening);
         }
 
+
+        /*
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateScreening(int id, [FromBody] ScreeningUpdateDto screeningDto)

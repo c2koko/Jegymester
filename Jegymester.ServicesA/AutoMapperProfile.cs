@@ -40,6 +40,9 @@ namespace Jegymester.Services
                 .ForMember(d => d.MovieId, o => o.MapFrom(s => s.MovieId));
 
 
+            CreateMap<Screening, ScreeningCreateDto>().ReverseMap();
+
+
             //Ticket Mapping
             CreateMap<Ticket, TicketDto>().ReverseMap()
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User))
