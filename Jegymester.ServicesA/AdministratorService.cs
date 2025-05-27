@@ -127,6 +127,7 @@ namespace Jegymester.Services
 
         //------------------------------------Screening Tasks------------------------------------//
 
+        /*
         public async Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto)
         {
             var screening = _mapper.Map<Screening>(screeningCreateDto);
@@ -134,8 +135,45 @@ namespace Jegymester.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<ScreeningDto>(screening);
         }
+        */
 
-        
+        // új CreateScreening
+        public async Task<ScreeningDto> CreateScreeningAsync(ScreeningCreateDto screeningCreateDto)
+        {
+
+            Screening screening = _mapper.Map<Screening>(screeningCreateDto);
+
+            _context.Screenings.Add(screening);
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine(screening.Id);
+
+
+            List<Chair> chairs = new List<Chair>();
+
+            for (int rows = 0; rows < 10; rows++)
+            {
+                for (int cols = 0; cols < 10; cols++)
+                {
+                    chairs.Add(new Chair()
+                    {
+                        ScreeningId = screening.Id,
+                        
+                        screening = screening,
+                        IsReserved = false,
+                    });
+                }
+            }
+
+
+            screening.Chairs = chairs;
+
+            _context.Chairs.AddRange(chairs);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<ScreeningDto>(screening);
+        }
+
         public async Task<ScreeningDto> UpdateScreeningAsync(int screeningId, ScreeningUpdateDto screeningUpdateDto)
         {
             var screening = await _context.Screenings.FindAsync(screeningId);

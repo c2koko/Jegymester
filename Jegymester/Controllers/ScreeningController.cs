@@ -44,15 +44,13 @@ namespace Jegymester.Controllers
         }
 
 
-
-
+       
         [HttpPost]
         public async Task<IActionResult> CreateScreening([FromBody] ScreeningCreateDto screeningDto)
         {
             var screening = await _screeningService.CreateScreeningAsync(screeningDto);
             return CreatedAtAction(nameof(GetScreeningById), new { id = screening.Id }, screening);
         }
-
 
         /*
 

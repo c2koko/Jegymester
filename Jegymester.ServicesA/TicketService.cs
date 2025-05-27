@@ -15,6 +15,7 @@ namespace Jegymester.Services
         Task<string> DeleteTicketAsync(int id);
         Task<TicketDto> GetTicketByIdAsync(int id);
         Task<List<Ticket>> GetTicketByUserIdAsync(int uId);
+        Task<List<TicketDto>> GetTicketsByScreening(int screeningId);
     }
     public class TicketService : ITicketService
     {
@@ -94,6 +95,20 @@ namespace Jegymester.Services
 
 
             return lista;
+        }
+
+        public async Task<List<TicketDto>> GetTicketsByScreening(int screeningId)
+        {
+            Screening screening = await _context.Screenings.FirstOrDefaultAsync(s => s.Id == screeningId);
+
+            if (screening == null)
+            {
+                return null;
+            }
+
+            List<Ticket> unvalidatedTickets = screening.Tickets.Where(t => !t.TicketVerified).ToList();
+
+            return _mapper.Map<List<TicketDto>>(unvalidatedTickets);
         }
 
         

@@ -7,6 +7,7 @@ using Jegymester.Dtos;
 using Jegymester.DataContext.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace Jegymester.Controllers
 {
@@ -69,6 +70,24 @@ namespace Jegymester.Controllers
         {
             var tickets = await _ticketService.GetTicketByUserIdAsync(id);
             return Ok(tickets);
+        }
+
+
+        [HttpGet("GetTicketForScreening/{id}")]
+        [Authorize(Roles = "Cashier")]
+        public async Task<IActionResult> GetTicketsForScreening(int screeningId)
+        {
+            List<TicketDto> tickets = await _ticketService.GetTicketsByScreening(screeningId);
+
+            if (tickets != null && tickets.Count != 0)
+            {
+                return Ok(tickets);
+            }
+            else
+            {
+                return NotFound();
+            }
+
         }
     }
 }

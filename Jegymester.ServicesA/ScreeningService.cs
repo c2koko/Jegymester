@@ -87,9 +87,9 @@ namespace Jegymester.Services
 
             List<Chair> chairs = new List<Chair>();
 
-            for (int rows = 1; rows < 11; rows++)
+            for (int rows = 0; rows < 10; rows++)
             {
-                for (int cols = 1; cols < 11; cols++)
+                for (int cols = 0; cols < 10; cols++)
                 {
                     chairs.Add(new Chair()
                     {
@@ -108,6 +108,7 @@ namespace Jegymester.Services
 
             return _mapper.Map<ScreeningDto>(screening);
         }
+
         /*
         public async Task<bool> DeleteScreeningAsync(int screeningId)
         {
