@@ -99,16 +99,23 @@ namespace Jegymester.Services
 
         public async Task<List<TicketDto>> GetTicketsByScreening(int screeningId)
         {
-            Screening screening = await _context.Screenings.FirstOrDefaultAsync(s => s.Id == screeningId);
+            var tickets = await _context.Tickets.Where(t => t.ScreeningId == screeningId && !t.TicketVerified).ToListAsync();
 
-            if (screening == null)
-            {
+            if (tickets == null || tickets.Count == 0)
+            { 
                 return null;
             }
 
-            List<Ticket> unvalidatedTickets = screening.Tickets.Where(t => !t.TicketVerified).ToList();
+            /*
+             List<TicketDto> dtos = new List<TicketDto>();
 
-            return _mapper.Map<List<TicketDto>>(unvalidatedTickets);
+            foreach (Ticket t in tickets)
+            {
+                dtos.Add(_mapper.Map<TicketDto>(t));
+            }
+             */
+
+            return _mapper.Map<List<TicketDto>>(tickets);
         }
 
         

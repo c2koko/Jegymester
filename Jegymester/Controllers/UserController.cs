@@ -52,5 +52,19 @@ namespace Jegymester.Controllers
             var user = await _userService.UpdateUserAsync(userId, userDto);
             return Ok(user);
         }
+
+        [HttpGet("GetUserInfo/{Id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUserInfo(int Id)
+        {
+            UserInfoDto dto = await _userService.GetUserInfoAsync(Id);
+            if (dto == null)
+            {
+                return NotFound("User not found");
+            }
+            
+            return Ok(dto);
+        }
+
     }
 }

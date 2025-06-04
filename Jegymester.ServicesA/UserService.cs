@@ -22,6 +22,7 @@ namespace Jegymester.Services
         Task<string> LoginUserAsync(UserLoginDto userDto);
         
         Task<UserDto> UpdateUserAsync(int userId, UserUpdateDto userDto);
+        Task<UserInfoDto> GetUserInfoAsync(int userId);
     }
     public class UserService : IUserService
     {
@@ -132,5 +133,25 @@ namespace Jegymester.Services
             return new ClaimsIdentity(claims, "Token");
         }
 
+
+        public async Task<UserInfoDto> GetUserInfoAsync(int userId)
+        {
+            // Betöltjük a felhasználót az adatbázisból
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user != null)
+            {
+                // visszaadjuk a felhasználó nevét
+                return new UserInfoDto {
+                    Name = user.Name,
+                    Email = user.Email,
+                };
+            }
+            else
+            {
+                // Ha a felhasználó nem található, akkor null-t adunk vissza és lekezeljük a kontrollerben
+                return null;
+            }
+        }
     }
 }

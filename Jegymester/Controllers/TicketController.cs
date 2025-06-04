@@ -73,8 +73,8 @@ namespace Jegymester.Controllers
         }
 
 
-        [HttpGet("GetTicketForScreening/{id}")]
-        [Authorize(Roles = "Cashier")]
+        [HttpGet("GetTicketsForScreening/{screeningId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetTicketsForScreening(int screeningId)
         {
             List<TicketDto> tickets = await _ticketService.GetTicketsByScreening(screeningId);

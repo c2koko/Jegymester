@@ -60,7 +60,11 @@ namespace Jegymester.DataContext.Dtos
         public string Phone { get; set; }
     }
 
-
+    public class UserInfoDto
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
 }
 
 /* ============================================= UNDER DEV =========================================
